@@ -1,0 +1,3719 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المستشفى الذكي | Smart Hospital</title>
+<meta name="description" content="المستشفى الذكي - رعاية صحية عالمية المستوى بأحدث التقنيات والكوادر الطبية المتميزة">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: '#0F2B5B',
+        secondary: '#00B5A8',
+        accent: '#D4AF37',
+        'primary-light': '#1a3d6e',
+        'secondary-light': '#00d4c5',
+      },
+      fontFamily: {
+        cairo: ['Cairo', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+:root {
+  --primary: #0F2B5B;
+  --secondary: #00B5A8;
+  --accent: #D4AF37;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.dark {
+  --glass-bg: rgba(15, 43, 91, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+
+/* Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 181, 168, 0.2);
+  border-color: rgba(0, 181, 168, 0.4);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(-60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 181, 168, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 181, 168, 0.6); }
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(0, 181, 168, 0.3); }
+  50% { border-color: rgba(0, 181, 168, 0.8); }
+}
+
+.animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
+.animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+.animate-slideInRight { animation: slideInRight 0.8s ease-out forwards; }
+.animate-slideInLeft { animation: slideInLeft 0.8s ease-out forwards; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+.animate-glow { animation: glow 3s ease-in-out infinite; }
+.animate-slideDown { animation: slideDown 0.6s ease-out forwards; }
+.animate-scaleIn { animation: scaleIn 0.5s ease-out forwards; }
+
+/* Scroll animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.scroll-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00B5A8, #0F2B5B);
+  border-radius: 4px;
+}
+
+/* Hero */
+.hero-bg {
+  background: linear-gradient(135deg, rgba(15, 43, 91, 0.95) 0%, rgba(0, 181, 168, 0.85) 100%),
+              url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920&q=80') center/cover no-repeat;
+}
+.dark .hero-bg {
+  background: linear-gradient(135deg, rgba(15, 43, 91, 0.98) 0%, rgba(0, 100, 90, 0.95) 100%),
+              url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1920&q=80') center/cover no-repeat;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-weight: 700;
+  transition: all 0.4s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s ease;
+}
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 181, 168, 0.4);
+}
+
+.btn-emergency {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: white;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-weight: 800;
+  transition: all 0.4s ease;
+  border: none;
+  cursor: pointer;
+  animation: heartbeat 2s ease-in-out infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-emergency:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 20px 50px rgba(220, 38, 38, 0.5);
+}
+
+/* Section styling */
+.section-padding { padding: 100px 0; }
+
+/* Card hover effects */
+.dept-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dept-card:hover {
+  transform: translateY(-12px) rotateX(5deg);
+  box-shadow: 0 30px 60px rgba(0, 181, 168, 0.25);
+}
+.dept-card:hover .dept-icon {
+  transform: scale(1.2) rotate(10deg);
+  color: #00B5A8;
+}
+.dept-icon { transition: all 0.4s ease; }
+
+/* Doctor card */
+.doctor-card {
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.doctor-card:hover { transform: translateY(-10px); }
+.doctor-card:hover .doctor-img { transform: scale(1.1); }
+.doctor-card:hover .doctor-overlay { opacity: 1; }
+.doctor-img { transition: transform 0.6s ease; }
+.doctor-overlay {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Testimonial */
+.testimonial-card {
+  transition: all 0.4s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Navigation */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00B5A8, #D4AF37);
+  transition: width 0.4s ease;
+  border-radius: 2px;
+}
+.nav-link:hover::after { width: 100%; }
+
+/* Stats counter */
+.stat-number {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Chat widget */
+.chat-widget {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 1000;
+}
+.chat-btn {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 181, 168, 0.4);
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.chat-btn:hover {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 15px 40px rgba(0, 181, 168, 0.6);
+}
+.chat-panel {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 380px;
+  max-height: 500px;
+  border-radius: 24px;
+  overflow: hidden;
+  transform: scale(0) translateY(20px);
+  transform-origin: bottom left;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+.chat-panel.active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-content {
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+/* Booking steps */
+.booking-step { display: none; }
+.booking-step.active {
+  display: block;
+  animation: fadeInUp 0.5s ease;
+}
+.step-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transition: all 0.4s ease;
+}
+.step-indicator.active {
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 181, 168, 0.5);
+}
+.step-indicator.completed {
+  background: #00B5A8;
+  color: white;
+}
+.step-line {
+  height: 3px;
+  flex: 1;
+  background: #e2e8f0;
+  transition: background 0.4s ease;
+}
+.dark .step-line { background: #334155; }
+.step-line.completed {
+  background: linear-gradient(90deg, #00B5A8, #0F2B5B);
+}
+
+/* Time slot */
+.time-slot {
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: 600;
+}
+.dark .time-slot { border-color: #334155; }
+.time-slot:hover {
+  border-color: #00B5A8;
+  background: rgba(0, 181, 168, 0.1);
+}
+.time-slot.selected {
+  border-color: #00B5A8;
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+}
+.time-slot.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* FAQ */
+.faq-item {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.faq-item.active { box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding: 0 24px 24px;
+}
+.faq-icon { transition: transform 0.4s ease; }
+.faq-item.active .faq-icon { transform: rotate(180deg); }
+
+/* Gallery */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.gallery-item img { transition: transform 0.6s ease; }
+.gallery-item:hover img { transform: scale(1.15); }
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 43, 91, 0.9), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+
+/* Particle background */
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(0, 181, 168, 0.3);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+}
+
+/* News card */
+.news-card { transition: all 0.4s ease; }
+.news-card:hover { transform: translateY(-8px); }
+.news-card:hover .news-img { transform: scale(1.1); }
+.news-img { transition: transform 0.6s ease; }
+
+/* Job card */
+.job-card {
+  transition: all 0.4s ease;
+  border-left: 4px solid transparent;
+}
+.job-card:hover {
+  border-left-color: #00B5A8;
+  transform: translateX(8px);
+}
+
+/* Form styling */
+.form-input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: transparent;
+  transition: all 0.3s ease;
+  font-family: 'Cairo', sans-serif;
+}
+.dark .form-input {
+  border-color: #334155;
+  color: #e2e8f0;
+}
+.form-input:focus {
+  outline: none;
+  border-color: #00B5A8;
+  box-shadow: 0 0 0 4px rgba(0, 181, 168, 0.15);
+}
+
+/* Notification toast */
+.toast {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  z-index: 3000;
+  padding: 16px 32px;
+  border-radius: 16px;
+  font-weight: 600;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Search overlay */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 43, 91, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.search-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 12px;
+}
+.dark .skeleton {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 1000px 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-padding { padding: 60px 0; }
+  .stat-number { font-size: 2.5rem; }
+  .chat-panel {
+    width: calc(100vw - 40px);
+    max-width: 380px;
+  }
+}
+
+/* Page transition */
+.page-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+.page-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image placeholder */
+.img-placeholder {
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+.dark .img-placeholder {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #64748b;
+}
+
+/* Map container */
+.map-container {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* Star rating */
+.star-rating { color: #D4AF37; }
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.badge-primary {
+  background: rgba(0, 181, 168, 0.15);
+  color: #00B5A8;
+}
+.badge-accent {
+  background: rgba(212, 175, 55, 0.15);
+  color: #D4AF37;
+}
+
+/* Timeline */
+.timeline-item {
+  position: relative;
+  padding-right: 40px;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  border: 3px solid white;
+  box-shadow: 0 0 0 3px rgba(0, 181, 168, 0.3);
+}
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 30px;
+  width: 2px;
+  height: calc(100% - 20px);
+  background: linear-gradient(180deg, #00B5A8, transparent);
+}
+.timeline-item:last-child::after { display: none; }
+
+/* Accreditations */
+.accreditation-card {
+  transition: all 0.4s ease;
+  filter: grayscale(100%);
+  opacity: 0.6;
+}
+.accreditation-card:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Video play button */
+.play-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 181, 168, 0.4);
+}
+.play-btn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 20px 50px rgba(0, 181, 168, 0.6);
+}
+
+/* Tab system */
+.tab-btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #00B5A8, #0F2B5B);
+  color: white;
+  box-shadow: 0 8px 25px rgba(0, 181, 168, 0.3);
+}
+.tab-content { display: none; }
+.tab-content.active {
+  display: block;
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Emergency banner */
+.emergency-banner {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: white;
+  padding: 12px 0;
+  position: relative;
+  overflow: hidden;
+}
+.emergency-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+/* Language switcher */
+.lang-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+.lang-btn.active {
+  background: rgba(0, 181, 168, 0.2);
+  border-color: #00B5A8;
+  color: #00B5A8;
+}
+
+/* Smooth section transitions */
+section { position: relative; }
+
+/* Custom shape dividers */
+.shape-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.shape-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 120px;
+}
+.shape-divider .shape-fill { fill: #f8fafc; }
+.dark .shape-divider .shape-fill { fill: #0f172a; }
+
+/* Number counter animation */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Image mask */
+.img-mask {
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* Sticky header */
+.header-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s ease;
+}
+.header-sticky.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.dark .header-sticky.scrolled {
+  background: rgba(15, 23, 42, 0.95);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100vh;
+  background: white;
+  z-index: 1500;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+}
+.dark .mobile-menu { background: #0f172a; }
+.mobile-menu.active { right: 0; }
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1400;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.mobile-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Preloader */
+.preloader {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0F2B5B, #00B5A8);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.preloader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: rotate 1s linear infinite;
+}
+
+/* Tooltip */
+.tooltip { position: relative; }
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 8px 16px;
+  background: #0F2B5B;
+  color: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.tooltip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Ripple effect */
+.ripple { position: relative; overflow: hidden; }
+.ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+.ripple:active::after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* Parallax */
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media (max-width: 768px) {
+  .parallax { background-attachment: scroll; }
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 3px solid #00B5A8;
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 181, 168, 0.3);
+  color: inherit;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
+  body { font-size: 12pt; }
+}
+
+/* New smooth animations */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes blurIn {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+@keyframes wave {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-fadeInScale { animation: fadeInScale 0.6s ease-out forwards; }
+.animate-slideUpFade { animation: slideUpFade 0.7s ease-out forwards; }
+.animate-blurIn { animation: blurIn 0.8s ease-out forwards; }
+.animate-wave { animation: wave 3s ease-in-out infinite; }
+
+/* Smooth card entrance */
+.card-entrance {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-entrance.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Elegant hover underline */
+.hover-underline {
+  position: relative;
+  display: inline-block;
+}
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  right: 0;
+  background: linear-gradient(90deg, #00B5A8, #D4AF37);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+.hover-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: right;
+}
+
+/* Glass morphism enhanced */
+.glass-enhanced {
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.dark .glass-enhanced {
+  background: linear-gradient(135deg, rgba(15,43,91,0.4), rgba(15,43,91,0.2));
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Smooth gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #0F2B5B 0%, #1a3d6e 50%, #00B5A8 100%);
+}
+.gradient-bg-soft {
+  background: linear-gradient(135deg, rgba(15,43,91,0.05) 0%, rgba(0,181,168,0.05) 100%);
+}
+
+/* Elegant text shadow */
+.text-shadow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.text-shadow-lg {
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth image zoom */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* Elegant border animation */
+.border-animate {
+  position: relative;
+}
+.border-animate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #00B5A8, #D4AF37, #0F2B5B);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.border-animate:hover::before {
+  opacity: 1;
+}
+
+/* Smooth number counter */
+.counter-smooth {
+  transition: all 0.3s ease;
+}
+
+/* Elegant loading state */
+.loading-shimmer {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+.dark .loading-shimmer {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 1000px 100%;
+}
+
+/* Smooth section divider */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,181,168,0.3), transparent);
+}
+
+/* Elegant focus ring */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 181, 168, 0.3), 0 0 0 6px rgba(0, 181, 168, 0.1);
+}
+
+/* Smooth social icons */
+.social-icon {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.social-icon:hover {
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 181, 168, 0.3);
+}
+
+/* Elegant card stack effect */
+.card-stack {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-stack:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth progress bar */
+.progress-smooth {
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Elegant notification */
+.notification-elegant {
+  animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1), fadeIn 0.3s ease;
+}
+
+/* Smooth modal entrance */
+.modal-elegant {
+  animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Elegant button press */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Smooth scroll indicator */
+.scroll-indicator {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Elegant text reveal */
+.text-reveal {
+  overflow: hidden;
+}
+.text-reveal span {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: slideUpFade 0.6s ease forwards;
+}
+
+/* Smooth image loading */
+.img-loading {
+  background: linear-gradient(90deg, #e2e8f0, #f1f5f9, #e2e8f0);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Elegant hover glow */
+.hover-glow {
+  transition: all 0.4s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(0, 181, 168, 0.3);
+}
+
+/* Smooth color transition */
+.color-transition {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Elegant shadow layers */
+.shadow-layer {
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.05),
+    0 4px 8px rgba(0,0,0,0.05),
+    0 8px 16px rgba(0,0,0,0.05);
+}
+.shadow-layer:hover {
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.05),
+    0 8px 16px rgba(0,0,0,0.1),
+    0 16px 32px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-500">
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-spinner mb-6"></div>
+  <h2 class="text-white text-2xl font-bold font-cairo animate-fadeInScale">المستشفى الذكي</h2>
+  <p class="text-white/80 mt-2 animate-slideUpFade">جاري تحميل الموقع...</p>
+</div>
+
+<!-- Emergency Banner -->
+<div class="emergency-banner no-print">
+  <div class="container mx-auto px-4 flex items-center justify-center gap-4 flex-wrap">
+    <i class="fas fa-ambulance text-xl animate-bounce"></i>
+    <span class="font-bold text-lg">طوارئ 24 ساعة:</span>
+    <a href="tel:19199" class="text-xl font-black hover:underline">19199</a>
+    <span class="hidden md:inline">|</span>
+    <a href="tel:01234567890" class="hover:underline">0123 456 7890</a>
+    <button onclick="openEmergencyModal()" class="mr-4 bg-white text-red-700 px-4 py-1 rounded-full font-bold text-sm hover:bg-red-50 transition btn-press">
+      <i class="fas fa-phone-alt ml-1"></i> اتصال سريع
+    </button>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header-sticky" id="header">
+  <div class="glass">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xl shadow-lg group-hover:scale-110 transition-transform animate-glow">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <div>
+            <h1 class="font-bold text-xl font-cairo text-primary dark:text-white">المستشفى الذكي</h1>
+            <p class="text-xs text-secondary font-inter">Smart Hospital</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="#home" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الرئيسية</a>
+          <a href="#about" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">عن المستشفى</a>
+          <a href="#departments" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الأقسام</a>
+          <a href="#doctors" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الأطباء</a>
+          <a href="#services" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الخدمات</a>
+          <a href="#booking" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الحجز</a>
+          <a href="#news" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">الأخبار</a>
+          <a href="#contact" class="nav-link px-4 py-2 text-sm font-semibold hover:text-secondary color-transition">التواصل</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-3">
+          <button onclick="toggleSearch()" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition tooltip" data-tooltip="بحث">
+            <i class="fas fa-search text-lg"></i>
+          </button>
+          <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition tooltip" data-tooltip="تبديل الوضع">
+            <i class="fas fa-moon dark:hidden text-lg"></i>
+            <i class="fas fa-sun hidden dark:block text-lg text-yellow-400"></i>
+          </button>
+          <div class="hidden md:flex items-center gap-1">
+            <button onclick="setLanguage('ar')" class="lang-btn active text-sm" id="lang-ar">عربي</button>
+            <button onclick="setLanguage('en')" class="lang-btn text-sm" id="lang-en">EN</button>
+          </div>
+          <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center transition">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="p-6">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="font-bold text-xl text-primary dark:text-white">القائمة</h2>
+      <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-2">
+      <a href="#home" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-home text-secondary"></i> الرئيسية
+      </a>
+      <a href="#about" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-info-circle text-secondary"></i> عن المستشفى
+      </a>
+      <a href="#departments" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-hospital text-secondary"></i> الأقسام الطبية
+      </a>
+      <a href="#doctors" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-user-md text-secondary"></i> الأطباء
+      </a>
+      <a href="#services" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-hand-holding-medical text-secondary"></i> الخدمات
+      </a>
+      <a href="#booking" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-calendar-check text-secondary"></i> حجز موعد
+      </a>
+      <a href="#news" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-newspaper text-secondary"></i> الأخبار
+      </a>
+      <a href="#media" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-images text-secondary"></i> الوسائط
+      </a>
+      <a href="#testimonials" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-comments text-secondary"></i> آراء المرضى
+      </a>
+      <a href="#jobs" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-briefcase text-secondary"></i> الوظائف
+      </a>
+      <a href="#faq" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-question-circle text-secondary"></i> الأسئلة الشائعة
+      </a>
+      <a href="#contact" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold transition flex items-center gap-3 color-transition">
+        <i class="fas fa-envelope text-secondary"></i> التواصل
+      </a>
+    </nav>
+  </div>
+</div>
+
+<!-- Search Overlay -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="w-full max-w-2xl px-4">
+    <div class="relative">
+      <input type="text" id="searchInput" placeholder="ابحث في الموقع..." 
+             class="w-full px-8 py-6 rounded-2xl text-2xl bg-white/10 border-2 border-white/30 text-white placeholder-white/60 focus:outline-none focus:border-secondary"
+             onkeyup="performSearch(this.value)">
+      <i class="fas fa-search absolute left-8 top-1/2 -translate-y-1/2 text-2xl text-white/60"></i>
+    </div>
+    <div id="searchResults" class="mt-6 max-h-96 overflow-y-auto rounded-2xl bg-white/10 backdrop-blur-lg"></div>
+    <button onclick="toggleSearch()" class="mt-8 text-white/80 hover:text-white text-lg font-semibold">
+      <i class="fas fa-times ml-2"></i> إغلاق
+    </button>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section id="home" class="hero-bg min-h-screen flex items-center relative overflow-hidden pt-20">
+  <div class="particles" id="particles"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-white animate-slideInRight">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 animate-fadeInScale">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          <span class="text-sm font-semibold">نحن نعمل على مدار 24 ساعة</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black font-cairo leading-tight mb-6 text-shadow-lg">
+          رعاية صحية<br>
+          <span class="text-secondary">متقدمة</span> بذكاء
+        </h1>
+        <p class="text-xl text-white/90 mb-8 leading-relaxed max-w-xl animate-blurIn">
+          نقدم أرقى مستويات الرعاية الصحية بأحدث التقنيات الطبية والكوادر المتخصصة. صحتك هي أولويتنا الأولى.
+        </p>
+        <div class="flex flex-wrap gap-4 animate-slideUpFade">
+          <a href="#booking" class="btn-primary ripple btn-press inline-flex items-center gap-2 text-lg">
+            <i class="fas fa-calendar-check"></i>
+            احجز موعدك الآن
+          </a>
+          <button onclick="openEmergencyModal()" class="btn-emergency inline-flex items-center gap-2 text-lg btn-press">
+            <i class="fas fa-ambulance"></i>
+            طوارئ
+          </button>
+        </div>
+        <div class="mt-12 flex items-center gap-8 animate-fadeInScale">
+          <div>
+            <div class="text-3xl font-black">25+</div>
+            <div class="text-white/70 text-sm">سنة خبرة</div>
+          </div>
+          <div class="w-px h-12 bg-white/30"></div>
+          <div>
+            <div class="text-3xl font-black">50+</div>
+            <div class="text-white/70 text-sm">قسم طبي</div>
+          </div>
+          <div class="w-px h-12 bg-white/30"></div>
+          <div>
+            <div class="text-3xl font-black">200+</div>
+            <div class="text-white/70 text-sm">طبيب متخصص</div>
+          </div>
+        </div>
+      </div>
+      <div class="hidden lg:block animate-slideInLeft">
+        <div class="relative">
+          <div class="absolute -inset-4 bg-gradient-to-r from-secondary/30 to-primary/30 rounded-3xl blur-2xl animate-glow"></div>
+          <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=800&q=80" 
+               alt="فريق طبي" 
+               class="relative rounded-3xl shadow-2xl w-full object-cover h-[600px]">
+          <div class="absolute -bottom-6 -right-6 glass p-6 rounded-2xl animate-float hover-glow">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-2xl">
+                <i class="fas fa-award"></i>
+              </div>
+              <div>
+                <div class="font-bold text-lg">معتمد دولياً</div>
+                <div class="text-sm opacity-70">JCI & ISO 9001</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -top-6 -left-6 glass p-4 rounded-2xl animate-float" style="animation-delay: 1s;">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white">
+                <i class="fas fa-check"></i>
+              </div>
+              <div>
+                <div class="font-bold">99.8%</div>
+                <div class="text-xs opacity-70">نسبة الرضا</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="shape-divider">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-slate-50 dark:bg-slate-900 relative">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="text-center scroll-reveal card-entrance">
+        <div class="stat-number counter" data-target="25">0</div>
+        <div class="text-slate-600 dark:text-slate-400 font-semibold mt-2">سنوات الخبرة</div>
+      </div>
+      <div class="text-center scroll-reveal card-entrance">
+        <div class="stat-number counter" data-target="200">0</div>
+        <div class="text-slate-600 dark:text-slate-400 font-semibold mt-2">طبيب متخصص</div>
+      </div>
+      <div class="text-center scroll-reveal card-entrance">
+        <div class="stat-number counter" data-target="500">0</div>
+        <div class="text-slate-600 dark:text-slate-400 font-semibold mt-2">سرير طبي</div>
+      </div>
+      <div class="text-center scroll-reveal card-entrance">
+        <div class="stat-number counter" data-target="1000000">0</div>
+        <div class="text-slate-600 dark:text-slate-400 font-semibold mt-2">مريض سنوياً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section-padding bg-white dark:bg-slate-800 relative overflow-hidden">
+  <div class="absolute top-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">عن المستشفى</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">نبذة عن المستشفى الذكي</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">مستشفى عالمي متخصص يقدم أرقى مستويات الرعاية الصحية بأحدث التقنيات والكوادر الطبية المتميزة</p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+      <div class="scroll-reveal">
+        <div class="relative img-zoom">
+          <div class="absolute -inset-4 bg-gradient-to-br from-secondary/20 to-primary/20 rounded-3xl blur-xl"></div>
+          <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80" 
+               alt="المستشفى" 
+               class="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]">
+          <div class="absolute bottom-8 right-8 glass p-6 rounded-2xl hover-glow">
+            <div class="text-4xl font-black text-secondary">25+</div>
+            <div class="font-semibold">سنة من التميز</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-reveal">
+        <h3 class="text-3xl font-bold font-cairo mb-6">قيادة التميز في الرعاية الصحية</h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6 text-lg">
+          تأسس المستشفى الذكي عام 1999 بهدف تقديم رعاية صحية عالمية المستوى لجميع المرضى. نؤمن بأن كل مريض يستحق أفضل رعاية ممكنة، ولذلك نستثمر باستمرار في أحدث التقنيات الطبية والكوادر البشرية المتميزة.
+        </p>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 text-lg">
+          نفتخر بكوننا من أوائل المستشفيات في المنطقة التي حصلت على الاعتماد الدولي JCI، ونستمر في تطوير خدماتنا لتلبية احتياجات مجتمعنا المتنامية.
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+              <i class="fas fa-check-circle text-xl"></i>
+            </div>
+            <span class="font-semibold">اعتماد JCI</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+              <i class="fas fa-check-circle text-xl"></i>
+            </div>
+            <span class="font-semibold">ISO 9001</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+              <i class="fas fa-check-circle text-xl"></i>
+            </div>
+            <span class="font-semibold">CAP معتمد</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary">
+              <i class="fas fa-check-circle text-xl"></i>
+            </div>
+            <span class="font-semibold">HIMSS Level 7</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision & Mission -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20">
+      <div class="glass-card p-8 scroll-reveal hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-eye"></i>
+        </div>
+        <h3 class="text-2xl font-bold font-cairo mb-4">رؤيتنا</h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          أن نكون المستشفى الرائد في المنطقة في تقديم الرعاية الصحية المتقدمة، وأن نكون الوجهة الأولى للمرضى الباحثين عن التميز الطبي والابتكار في العلاج.
+        </p>
+      </div>
+      <div class="glass-card p-8 scroll-reveal hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-secondary flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-bullseye"></i>
+        </div>
+        <h3 class="text-2xl font-bold font-cairo mb-4">رسالتنا</h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          تقديم رعاية صحية شاملة ومتميزة بأعلى معايير الجودة العالمية، مع التركيز على تجربة المريض والنتائج العلاجية المثلى من خلال الابتكار والتقنية.
+        </p>
+      </div>
+    </div>
+
+    <!-- History Timeline -->
+    <div class="mb-20">
+      <h3 class="text-3xl font-bold font-cairo text-center mb-12 scroll-reveal">تاريخ المستشفى</h3>
+      <div class="max-w-3xl mx-auto">
+        <div class="timeline-item mb-8 scroll-reveal">
+          <div class="glass-card p-6 hover-glow">
+            <div class="badge badge-accent mb-2">1999</div>
+            <h4 class="font-bold text-xl mb-2">التأسيس</h4>
+            <p class="text-slate-600 dark:text-slate-400">تأسيس المستشفى الذكي بسعة 100 سرير في قلب المدينة</p>
+          </div>
+        </div>
+        <div class="timeline-item mb-8 scroll-reveal">
+          <div class="glass-card p-6 hover-glow">
+            <div class="badge badge-accent mb-2">2005</div>
+            <h4 class="font-bold text-xl mb-2">الاعتماد الدولي</h4>
+            <p class="text-slate-600 dark:text-slate-400">الحصول على اعتماد JCI الدولي للجودة والسلامة</p>
+          </div>
+        </div>
+        <div class="timeline-item mb-8 scroll-reveal">
+          <div class="glass-card p-6 hover-glow">
+            <div class="badge badge-accent mb-2">2012</div>
+            <h4 class="font-bold text-xl mb-2">التوسع الكبير</h4>
+            <p class="text-slate-600 dark:text-slate-400">توسيع المستشفى ليصبح 500 سرير مع إضافة أقسام متخصصة جديدة</p>
+          </div>
+        </div>
+        <div class="timeline-item mb-8 scroll-reveal">
+          <div class="glass-card p-6 hover-glow">
+            <div class="badge badge-accent mb-2">2018</div>
+            <h4 class="font-bold text-xl mb-2">التحول الرقمي</h4>
+            <p class="text-slate-600 dark:text-slate-400">إطلاق المستشفى الذكي مع أنظمة AI وروبوتات الجراحة</p>
+          </div>
+        </div>
+        <div class="timeline-item scroll-reveal">
+          <div class="glass-card p-6 hover-glow">
+            <div class="badge badge-accent mb-2">2024</div>
+            <h4 class="font-bold text-xl mb-2">التميز العالمي</h4>
+            <p class="text-slate-600 dark:text-slate-400">الترشح لجائزة أفضل مستشفى ذكي في الشرق الأوسط</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accreditations -->
+    <div class="mb-20">
+      <h3 class="text-3xl font-bold font-cairo text-center mb-12 scroll-reveal">الاعتمادات والشهادات</h3>
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="accreditation-card glass-card p-6 w-40 h-40 flex flex-col items-center justify-center scroll-reveal hover-glow">
+          <i class="fas fa-certificate text-4xl text-secondary mb-2"></i>
+          <div class="font-bold text-center text-sm">JCI</div>
+        </div>
+        <div class="accreditation-card glass-card p-6 w-40 h-40 flex flex-col items-center justify-center scroll-reveal hover-glow">
+          <i class="fas fa-award text-4xl text-accent mb-2"></i>
+          <div class="font-bold text-center text-sm">ISO 9001</div>
+        </div>
+        <div class="accreditation-card glass-card p-6 w-40 h-40 flex flex-col items-center justify-center scroll-reveal hover-glow">
+          <i class="fas fa-microscope text-4xl text-secondary mb-2"></i>
+          <div class="font-bold text-center text-sm">CAP</div>
+        </div>
+        <div class="accreditation-card glass-card p-6 w-40 h-40 flex flex-col items-center justify-center scroll-reveal hover-glow">
+          <i class="fas fa-laptop-medical text-4xl text-accent mb-2"></i>
+          <div class="font-bold text-center text-sm">HIMSS 7</div>
+        </div>
+        <div class="accreditation-card glass-card p-6 w-40 h-40 flex flex-col items-center justify-center scroll-reveal hover-glow">
+          <i class="fas fa-heart text-4xl text-red-500 mb-2"></i>
+          <div class="font-bold text-center text-sm">CCHD</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leadership -->
+    <div>
+      <h3 class="text-3xl font-bold font-cairo text-center mb-12 scroll-reveal">الإدارة العليا</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-6 text-center scroll-reveal hover-lift hover-glow">
+          <div class="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-4 border-secondary/30 img-zoom">
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80" alt="المدير" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-bold text-xl">د. أحمد محمد</h4>
+          <p class="text-secondary font-semibold mb-2">المدير التنفيذي</p>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">25 سنة خبرة في الإدارة الصحية</p>
+        </div>
+        <div class="glass-card p-6 text-center scroll-reveal hover-lift hover-glow">
+          <div class="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-4 border-secondary/30 img-zoom">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80" alt="المدير الطبي" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-bold text-xl">د. سارة عبدالله</h4>
+          <p class="text-secondary font-semibold mb-2">المدير الطبي</p>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">استشارية الجراحة العامة</p>
+        </div>
+        <div class="glass-card p-6 text-center scroll-reveal hover-lift hover-glow">
+          <div class="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden border-4 border-secondary/30 img-zoom">
+            <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=200&q=80" alt="التمريض" class="w-full h-full object-cover">
+          </div>
+          <h4 class="font-bold text-xl">د. خالد العلي</h4>
+          <p class="text-secondary font-semibold mb-2">مدير التمريض</p>
+          <p class="text-slate-600 dark:text-slate-400 text-sm">دكتوراه في إدارة التمريض</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Departments Section -->
+<section id="departments" class="section-padding bg-slate-50 dark:bg-slate-900 relative">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الأقسام الطبية</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">أقسامنا الطبية المتخصصة</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">15 قسم طبي متخصص يقدم أرقى مستويات الرعاية الصحية بأحدث التقنيات</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="departmentsGrid">
+      <!-- Department cards will be generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- Department Detail Modal -->
+<div class="modal-overlay" id="deptModal">
+  <div class="modal-content glass w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto rounded-3xl">
+    <div class="p-8" id="deptModalContent">
+      <!-- Content filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Doctors Section -->
+<section id="doctors" class="section-padding bg-white dark:bg-slate-800 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full opacity-5">
+    <div class="absolute top-20 left-20 w-64 h-64 rounded-full bg-secondary blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-64 h-64 rounded-full bg-primary blur-3xl"></div>
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الأطباء</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">نخبة من أفضل الأطباء</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">كوادر طبية عالمية المستوى في جميع التخصصات</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="doctorsGrid">
+      <!-- Doctor cards generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- Doctor Detail Modal -->
+<div class="modal-overlay" id="doctorModal">
+  <div class="modal-content glass w-full max-w-3xl mx-4 max-h-[90vh] overflow-y-auto rounded-3xl">
+    <div class="p-8" id="doctorModalContent">
+      <!-- Content filled by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- Services Section -->
+<section id="services" class="section-padding bg-slate-50 dark:bg-slate-900">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الخدمات الطبية</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">خدماتنا الطبية المتكاملة</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">نقدم مجموعة شاملة من الخدمات الطبية بأحدث التقنيات</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-stethoscope"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">الفحوصات الشاملة</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">برامج فحص شاملة تشمل جميع أجهزة الجسم مع تقارير مفصلة واستشارات متخصصة.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>فحص القلب والأوعية</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>فحص الجهاز الهضمي</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>فحص السكري والغدد</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-procedures"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">العمليات الجراحية</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">غرف عمليات مجهزة بأحدث التقنيات مع جراحة روبوتية وجراحة المناظير المتقدمة.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>جراحة القلب المفتوح</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>جراحة الدماغ بالروبوت</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>جراحة المناظير المتقدمة</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-flask"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">المختبر المتقدم</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">مختبر معتمد دولياً يقدم أكثر من 2000 تحليل مع نتائج دقيقة وسريعة.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>تحاليل الدم الشاملة</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>التحاليل الجينية</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>تحاليل الأورام</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-x-ray"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">الأشعة التشخيصية</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">أحدث أجهزة الأشعة في المنطقة تشمل MRI 3 تسلا وCT 640 شريحة.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>رنين مغناطيسي 3 تسلا</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>أشعة مقطعية 640 شريحة</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>أشعة PET-CT</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-home"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">الرعاية المنزلية</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">خدمات رعاية طبية متكاملة في المنزل مع زيارات الأطباء والتمريض.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>زيارات الأطباء المتخصصين</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>التمريض المنزلي 24/7</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>العلاج الطبيعي المنزلي</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-syringe"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">التطعيمات</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">مركز تطعيمات معتمد يقدم جميع اللقاحات للأطفال والبالغين والمسافرين.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>لقاحات الأطفال</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>لقاحات المسافرين</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>لقاحات الموسمية</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-user-md"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">الاستشارات الطبية</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">استشارات طبية متخصصة عبر الإنترنت وفي العيادات مع أطباء من الدرجة الأولى.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>استشارات عبر الفيديو</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>استشارات ثانية رأي</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>استشارات نفسية</li>
+        </ul>
+      </div>
+
+      <div class="glass-card p-8 scroll-reveal hover-lift hover-glow">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-700 flex items-center justify-center text-white text-2xl mb-6">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <h3 class="text-xl font-bold font-cairo mb-3">إعادة التأهيل</h3>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">برامج تأهيل شاملة للمرضى بعد العمليات والإصابات بإشراف متخصصين.</p>
+        <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+          <li><i class="fas fa-check text-secondary ml-2"></i>العلاج الطبيعي</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>تأهيل ما بعد الجراحة</li>
+          <li><i class="fas fa-check text-secondary ml-2"></i>تأهيل الأطفال</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Section -->
+<section id="booking" class="section-padding bg-gradient-to-br from-primary to-primary-light dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-accent mb-4">احجز موعدك</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 text-white">نظام الحجز الذكي</h2>
+      <p class="text-white/80 max-w-2xl mx-auto text-lg">احجز موعدك بخطوات بسيطة مع نظامنا الذكي للحجز الإلكتروني</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="glass rounded-3xl p-8 md:p-12">
+        <!-- Steps Indicator -->
+        <div class="flex items-center mb-10">
+          <div class="step-indicator active" id="step1Ind">1</div>
+          <div class="step-line" id="line1"></div>
+          <div class="step-indicator" id="step2Ind">2</div>
+          <div class="step-line" id="line2"></div>
+          <div class="step-indicator" id="step3Ind">3</div>
+          <div class="step-line" id="line3"></div>
+          <div class="step-indicator" id="step4Ind">4</div>
+          <div class="step-line" id="line4"></div>
+          <div class="step-indicator" id="step5Ind">5</div>
+        </div>
+
+        <!-- Step 1: Select Department -->
+        <div class="booking-step active" id="step1">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-center">اختر القسم الطبي</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="bookingDepts">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+
+        <!-- Step 2: Select Doctor -->
+        <div class="booking-step" id="step2">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-center">اختر الطبيب</h3>
+          <div class="grid md:grid-cols-2 gap-4" id="bookingDoctors">
+            <!-- Generated by JS -->
+          </div>
+          <button onclick="prevStep(1)" class="mt-6 text-slate-500 hover:text-primary font-semibold">
+            <i class="fas fa-arrow-right ml-2"></i> السابق
+          </button>
+        </div>
+
+        <!-- Step 3: Select Date -->
+        <div class="booking-step" id="step3">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-center">اختر التاريخ</h3>
+          <div class="flex justify-center mb-8">
+            <input type="date" id="bookingDate" class="form-input text-center text-lg" min="">
+          </div>
+          <div class="text-center">
+            <button onclick="prevStep(2)" class="text-slate-500 hover:text-primary font-semibold ml-4">
+              <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button onclick="nextStep(4)" class="btn-primary" id="dateNextBtn" disabled>
+              التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Select Time -->
+        <div class="booking-step" id="step4">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-center">اختر الوقت</h3>
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-3 mb-8" id="timeSlots">
+            <!-- Generated by JS -->
+          </div>
+          <div class="text-center">
+            <button onclick="prevStep(3)" class="text-slate-500 hover:text-primary font-semibold ml-4">
+              <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button onclick="nextStep(5)" class="btn-primary" id="timeNextBtn" disabled>
+              التالي <i class="fas fa-arrow-left mr-2"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 5: Patient Info -->
+        <div class="booking-step" id="step5">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-center">بيانات المريض</h3>
+          <div class="grid md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label class="block font-semibold mb-2">الاسم الكامل</label>
+              <input type="text" id="patientName" class="form-input" placeholder="أدخل اسمك الكامل">
+            </div>
+            <div>
+              <label class="block font-semibold mb-2">رقم الهاتف</label>
+              <input type="tel" id="patientPhone" class="form-input" placeholder="01xxxxxxxxx">
+            </div>
+            <div>
+              <label class="block font-semibold mb-2">البريد الإلكتروني</label>
+              <input type="email" id="patientEmail" class="form-input" placeholder="email@example.com">
+            </div>
+            <div>
+              <label class="block font-semibold mb-2">الرقم القومي</label>
+              <input type="text" id="patientID" class="form-input" placeholder="xxxxxxxxxxxx">
+            </div>
+          </div>
+          <div class="mb-6">
+            <label class="block font-semibold mb-2">سبب الزيارة / الأعراض</label>
+            <textarea id="patientReason" rows="3" class="form-input" placeholder="اشرح سبب زيارتك أو الأعراض التي تشعر بها..."></textarea>
+          </div>
+          <div class="glass p-6 rounded-2xl mb-6">
+            <h4 class="font-bold mb-4">ملخص الموعد</h4>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div><span class="text-slate-500">القسم:</span> <span id="summaryDept" class="font-semibold"></span></div>
+              <div><span class="text-slate-500">الطبيب:</span> <span id="summaryDoctor" class="font-semibold"></span></div>
+              <div><span class="text-slate-500">التاريخ:</span> <span id="summaryDate" class="font-semibold"></span></div>
+              <div><span class="text-slate-500">الوقت:</span> <span id="summaryTime" class="font-semibold"></span></div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button onclick="prevStep(4)" class="text-slate-500 hover:text-primary font-semibold ml-4">
+              <i class="fas fa-arrow-right ml-2"></i> السابق
+            </button>
+            <button onclick="confirmBooking()" class="btn-primary text-lg">
+              <i class="fas fa-check-circle"></i> تأكيد الحجز
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Confirmation Modal -->
+<div class="modal-overlay" id="bookingConfirmModal">
+  <div class="modal-content glass w-full max-w-md mx-4 rounded-3xl text-center p-8">
+    <div class="w-20 h-20 rounded-full bg-green-500 flex items-center justify-center text-white text-3xl mx-auto mb-6 animate-bounce">
+      <i class="fas fa-check"></i>
+    </div>
+    <h3 class="text-2xl font-bold font-cairo mb-4">تم تأكيد حجزك بنجاح!</h3>
+    <p class="text-slate-600 dark:text-slate-400 mb-6">تم إرسال تفاصيل الموعد إلى بريدك الإلكتروني ورقم هاتفك</p>
+    <div class="glass p-4 rounded-xl mb-6 text-right">
+      <div class="mb-2"><span class="text-slate-500">رقم الحجز:</span> <span id="bookingRef" class="font-bold text-secondary"></span></div>
+      <div class="mb-2"><span class="text-slate-500">القسم:</span> <span id="confirmDept"></span></div>
+      <div class="mb-2"><span class="text-slate-500">الطبيب:</span> <span id="confirmDoctor"></span></div>
+      <div class="mb-2"><span class="text-slate-500">التاريخ:</span> <span id="confirmDate"></span></div>
+      <div><span class="text-slate-500">الوقت:</span> <span id="confirmTime"></span></div>
+    </div>
+    <button onclick="closeModal('bookingConfirmModal')" class="btn-primary w-full">حسناً</button>
+  </div>
+</div>
+
+<!-- Emergency Section -->
+<section id="emergency" class="py-20 bg-gradient-to-br from-red-700 to-red-900 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute top-10 left-10 w-40 h-40 rounded-full bg-white blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-10 right-10 w-60 h-60 rounded-full bg-red-400 blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-white scroll-reveal">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+          <span class="w-3 h-3 bg-red-400 rounded-full animate-pulse"></span>
+          <span class="font-semibold">طوارئ 24/7</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-black font-cairo mb-6">قسم الطوارئ</h2>
+        <p class="text-xl text-white/90 mb-8 leading-relaxed">
+          قسم طوارئ مجهز بأحدث التقنيات مع فريق طبي متخصص على مدار 24 ساعة. نستقبل جميع الحالات الطارئة فوراً.
+        </p>
+        <div class="flex flex-wrap gap-4 mb-8">
+          <a href="tel:19199" class="bg-white text-red-700 px-8 py-4 rounded-full font-bold text-xl hover:scale-105 transition inline-flex items-center gap-3 shadow-2xl btn-press">
+            <i class="fas fa-phone-alt animate-bounce"></i>
+            19199
+          </a>
+          <a href="tel:01234567890" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-bold text-xl hover:bg-white/30 transition inline-flex items-center gap-3">
+            <i class="fas fa-mobile-alt"></i>
+            0123 456 7890
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl hover-glow">
+            <i class="fas fa-clock text-2xl mb-2"></i>
+            <div class="font-bold">24 ساعة</div>
+            <div class="text-sm text-white/70">خدمة مستمرة</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl hover-glow">
+            <i class="fas fa-ambulance text-2xl mb-2"></i>
+            <div class="font-bold">5 دقائق</div>
+            <div class="text-sm text-white/70">متوسط وقت الاستجابة</div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-reveal">
+        <div class="glass bg-white/10 p-8 rounded-3xl">
+          <h3 class="text-2xl font-bold font-cairo mb-6 text-white">معلومات الوصول السريع</h3>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <i class="fas fa-map-marker-alt text-xl"></i>
+              </div>
+              <div class="text-white">
+                <div class="font-bold">العنوان</div>
+                <div class="text-white/80">123 شارع النيل، القاهرة، مصر</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <i class="fas fa-car text-xl"></i>
+              </div>
+              <div class="text-white">
+                <div class="font-bold">موقف السيارات</div>
+                <div class="text-white/80">موقف مجاني للطوارئ أمام البوابة الرئيسية</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
+                <i class="fas fa-helicopter text-xl"></i>
+              </div>
+              <div class="text-white">
+                <div class="font-bold">مهبط الطوارئ</div>
+                <div class="text-white/80">متاح للإسعاف الجوي على السطح</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 map-container h-48 bg-slate-200 rounded-xl flex items-center justify-center">
+            <div class="text-center text-slate-500">
+              <i class="fas fa-map text-4xl mb-2"></i>
+              <div>خريطة الموقع</div>
+              <a href="https://maps.google.com" target="_blank" class="text-secondary hover:underline text-sm mt-1 inline-block">فتح في Google Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- News Section -->
+<section id="news" class="section-padding bg-white dark:bg-slate-800">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الأخبار الطبية</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">آخر الأخبار والمقالات</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">تابع أحدث الأخبار الطبية والنصائح الصحية</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary text-xs">نصائح صحية</span>
+            <span class="text-xs text-slate-500">15 يناير 2026</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">10 نصائح للحفاظ على صحة القلب في الشتاء</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">تعرف على أهم النصائح للحفاظ على صحة القلب والأوعية الدموية خلال فصل الشتاء...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-accent text-xs">تقنية طبية</span>
+            <span class="text-xs text-slate-500">10 يناير 2026</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">المستشفى الذكي يطلق أول روبوت جراحي في المنطقة</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">بفخر نعلن عن إطلاق أحدث روبوت جراحي لإجراء العمليات الدقيقة بأعلى مستويات الدقة...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary text-xs">حملة توعية</span>
+            <span class="text-xs text-slate-500">5 يناير 2026</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">حملة التطعيم ضد الإنفلونزا الموسمية</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">انضم إلى حملتنا للتطعيم ضد الإنفلونزا الموسمية واحمِ نفسك وعائلتك...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary text-xs">صحة الأطفال</span>
+            <span class="text-xs text-slate-500">1 يناير 2026</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">دليل الأم الشامل للعناية بالأطفال حديثي الولادة</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">كل ما تحتاجين معرفته عن العناية بطفلك حديث الولادة في الأشهر الأولى...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-accent text-xs">إنجاز طبي</span>
+            <span class="text-xs text-slate-500">28 ديسمبر 2025</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">إجراء أول عملية زراعة قلب بالروبوت في مصر</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">فريق جراحة القلب يحقق إنجازاً تاريخياً بإجراء أول عملية زراعة قلب بمساعدة الروبوت...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+
+      <article class="news-card glass-card overflow-hidden scroll-reveal hover-glow">
+        <div class="h-56 overflow-hidden img-zoom">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="خبر" class="news-img w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="badge badge-primary text-xs">لياقة بدنية</span>
+            <span class="text-xs text-slate-500">20 ديسمبر 2025</span>
+          </div>
+          <h3 class="font-bold text-xl mb-3 hover:text-secondary transition">أهمية التمارين الرياضية للمرضى بعد العمليات</h3>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">تعرف على البرامج الرياضية المناسبة للتعافي السريع بعد العمليات الجراحية...</p>
+          <a href="#" class="text-secondary font-semibold hover:underline inline-flex items-center gap-2">
+            اقرأ المزيد <i class="fas fa-arrow-left text-sm"></i>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Media Center -->
+<section id="media" class="section-padding bg-slate-50 dark:bg-slate-900">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">مركز الوسائط</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">استكشف المستشفى</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">جولات افتراضية ومعارض الصور والفيديوهات</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex justify-center gap-4 mb-12 scroll-reveal">
+      <button class="tab-btn active" onclick="switchTab('gallery')">
+        <i class="fas fa-images ml-2"></i>معرض الصور
+      </button>
+      <button class="tab-btn" onclick="switchTab('videos')">
+        <i class="fas fa-video ml-2"></i>الفيديوهات
+      </button>
+      <button class="tab-btn" onclick="switchTab('tours')">
+        <i class="fas fa-vr-cardboard ml-2"></i>جولات افتراضية
+      </button>
+    </div>
+
+    <!-- Gallery -->
+    <div class="tab-content active" id="tab-gallery">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&q=80" alt="المستشفى" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">الواجهة الرئيسية</div>
+              <div class="text-sm text-white/80">مبنى المستشفى الرئيسي</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=400&q=80" alt="غرفة" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">غرفة المرضى</div>
+              <div class="text-sm text-white/80">غرف فاخرة مجهزة</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=400&q=80" alt="عمليات" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">غرفة العمليات</div>
+              <div class="text-sm text-white/80">أحدث التقنيات</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80" alt="مختبر" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">المختبر</div>
+              <div class="text-sm text-white/80">أحدث الأجهزة</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&q=80" alt="أشعة" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">قسم الأشعة</div>
+              <div class="text-sm text-white/80">MRI 3 تسلا</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=400&q=80" alt="استقبال" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">الاستقبال</div>
+              <div class="text-sm text-white/80">استقبال فاخر</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=400&q=80" alt="أطفال" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">قسم الأطفال</div>
+              <div class="text-sm text-white/80">رعاية خاصة</div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-item aspect-square scroll-reveal">
+          <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&q=80" alt="طوارئ" class="w-full h-full object-cover">
+          <div class="gallery-overlay">
+            <div class="text-white">
+              <div class="font-bold">قسم الطوارئ</div>
+              <div class="text-sm text-white/80">جهوزية 24/7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="tab-content" id="tab-videos">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="glass-card overflow-hidden scroll-reveal hover-glow">
+          <div class="relative h-56 bg-slate-800 flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" class="w-full h-full object-cover opacity-60">
+            <div class="play-btn absolute" onclick="showToast('جاري تشغيل الفيديو...')">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">جولة في المستشفى الذكي</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">جولة شاملة في مرافق المستشفى وأقسامه المختلفة</p>
+          </div>
+        </div>
+        <div class="glass-card overflow-hidden scroll-reveal hover-glow">
+          <div class="relative h-56 bg-slate-800 flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" class="w-full h-full object-cover opacity-60">
+            <div class="play-btn absolute" onclick="showToast('جاري تشغيل الفيديو...')">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">قصة نجاح: علاج السرطان</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">قصة إنسانية مؤثرة لشفاء مريض من السرطان</p>
+          </div>
+        </div>
+        <div class="glass-card overflow-hidden scroll-reveal hover-glow">
+          <div class="relative h-56 bg-slate-800 flex items-center justify-center">
+            <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80" class="w-full h-full object-cover opacity-60">
+            <div class="play-btn absolute" onclick="showToast('جاري تشغيل الفيديو...')">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">الجراحة الروبوتية</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-sm">تعرف على أحدث تقنيات الجراحة الروبوتية</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Virtual Tours -->
+    <div class="tab-content" id="tab-tours">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="glass-card p-8 text-center scroll-reveal hover-lift hover-glow">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-3xl mx-auto mb-6">
+            <i class="fas fa-hospital"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-3">جولة في المبنى الرئيسي</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-6">استكشف المبنى الرئيسي للمستشفى بما في ذلك الأقسام والعيادات</p>
+          <button onclick="showToast('جاري تحميل الجولة الافتراضية...')" class="btn-primary">
+            <i class="fas fa-vr-cardboard ml-2"></i> بدء الجولة
+          </button>
+        </div>
+        <div class="glass-card p-8 text-center scroll-reveal hover-lift hover-glow">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-accent to-secondary flex items-center justify-center text-white text-3xl mx-auto mb-6">
+            <i class="fas fa-procedures"></i>
+          </div>
+          <h3 class="font-bold text-xl mb-3">جولة في غرف العمليات</h3>
+          <p class="text-slate-600 dark:text-slate-400 mb-6">شاهد أحدث غرف العمليات المجهزة بأفضل التقنيات</p>
+          <button onclick="showToast('جاري تحميل الجولة الافتراضية...')" class="btn-primary">
+            <i class="fas fa-vr-cardboard ml-2"></i> بدء الجولة
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials" class="section-padding bg-white dark:bg-slate-800 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full opacity-5">
+    <div class="absolute top-20 right-20 w-72 h-72 rounded-full bg-secondary blur-3xl"></div>
+    <div class="absolute bottom-20 left-20 w-72 h-72 rounded-full bg-primary blur-3xl"></div>
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">آراء المرضى</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">ماذا يقول مرضانا</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">تجارب حقيقية من مرضى استفادوا من خدماتنا</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "تجربة رائعة من البداية للنهاية. الفريق الطبي محترف جداً والرعاية كانت على أعلى مستوى. شكراً للمستشفى الذكي على اهتمامهم الكبير."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">محمد أحمد</div>
+            <div class="text-sm text-slate-500">مريض قسم القلب</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "أفضل مستشفى في المنطقة بلا منازع. أجريت عملية جراحية معقدة والنتائج كانت مذهلة. الأطباء متعاونون والتمريض رائع."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">فاطمة علي</div>
+            <div class="text-sm text-slate-500">مريضة قسم العظام</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "خدمة ممتازة ونظام حجز سهل. استخدمت خدمة الاستشارة عبر الإنترنت وكانت تجربة سلسة جداً. أنصح الجميع بالتعامل معهم."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">خالد محمود</div>
+            <div class="text-sm text-slate-500">مريض استشارة عن بُعد</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "ولدت طفلتي في المستشفى الذكي والتجربة كانت رائعة. قسم النساء والتوليد مجهز بأعلى مستوى والعناية بالأم والطفل ممتازة."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">نورا سامي</div>
+            <div class="text-sm text-slate-500">مريضة قسم النساء</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "قسم الطوارئ استجاب بسرعة فائقة لحالتي. خلال 5 دقائق كنت في غرفة الفحص. الشكر الجزيل للفريق الطبي المتميز."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">عمر حسين</div>
+            <div class="text-sm text-slate-500">مريض طوارئ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card glass-card p-8 scroll-reveal hover-glow">
+        <div class="flex items-center gap-1 mb-4 star-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          "ابني يتلقى علاجاً في قسم الأورام والنتائج مبشرة جداً. الفريق الطبي يعاملنا كعائلة وليس كمرضى. شكراً من القلب."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="مريض" class="w-full h-full object-cover">
+          </div>
+          <div>
+            <div class="font-bold">ليلى محمود</div>
+            <div class="text-sm text-slate-500">مرافقة مريض أورام</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Jobs Section -->
+<section id="jobs" class="section-padding bg-slate-50 dark:bg-slate-900">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الوظائف</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">انضم إلى فريقنا</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">فرص وظيفية متميزة في بيئة عمل محفزة</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div class="job-card glass-card p-6 scroll-reveal hover-glow">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="font-bold text-xl mb-1">أخصائي قلب وقسطرة</h3>
+            <p class="text-secondary font-semibold">القسم: قلب وأوعية دموية</p>
+          </div>
+          <span class="badge badge-primary">دوام كامل</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">نبحث عن أخصائي قلب وقسطرة ذو خبرة لا تقل عن 5 سنوات في إجراء القسطرة التداخلية.</p>
+        <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+          <span><i class="fas fa-map-marker-alt ml-1"></i> القاهرة</span>
+          <span><i class="fas fa-briefcase ml-1"></i> 5+ سنوات</span>
+          <span><i class="fas fa-money-bill-wave ml-1"></i> competitive</span>
+        </div>
+        <button onclick="openJobModal('أخصائي قلب وقسطرة')" class="btn-primary text-sm w-full">
+          <i class="fas fa-paper-plane ml-2"></i> التقديم الآن
+        </button>
+      </div>
+
+      <div class="job-card glass-card p-6 scroll-reveal hover-glow">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="font-bold text-xl mb-1">ممرضة ICU</h3>
+            <p class="text-secondary font-semibold">القسم: العناية المركزة</p>
+          </div>
+          <span class="badge badge-primary">دوام كامل</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">مطلوب ممرضات ICU ذوات خبرة في العناية المركزة للبالغين. شهادة ACLS مطلوبة.</p>
+        <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+          <span><i class="fas fa-map-marker-alt ml-1"></i> القاهرة</span>
+          <span><i class="fas fa-briefcase ml-1"></i> 3+ سنوات</span>
+          <span><i class="fas fa-money-bill-wave ml-1"></i> competitive</span>
+        </div>
+        <button onclick="openJobModal('ممرضة ICU')" class="btn-primary text-sm w-full">
+          <i class="fas fa-paper-plane ml-2"></i> التقديم الآن
+        </button>
+      </div>
+
+      <div class="job-card glass-card p-6 scroll-reveal hover-glow">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="font-bold text-xl mb-1">أخصائي أشعة تشخيصية</h3>
+            <p class="text-secondary font-semibold">القسم: الأشعة</p>
+          </div>
+          <span class="badge badge-primary">دوام كامل</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">نبحث عن أخصائي أشعة ذو خبرة في MRI و CT و PET-CT. خبرة في الأشعة التداخلية ميزة إضافية.</p>
+        <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+          <span><i class="fas fa-map-marker-alt ml-1"></i> القاهرة</span>
+          <span><i class="fas fa-briefcase ml-1"></i> 4+ سنوات</span>
+          <span><i class="fas fa-money-bill-wave ml-1"></i> competitive</span>
+        </div>
+        <button onclick="openJobModal('أخصائي أشعة تشخيصية')" class="btn-primary text-sm w-full">
+          <i class="fas fa-paper-plane ml-2"></i> التقديم الآن
+        </button>
+      </div>
+
+      <div class="job-card glass-card p-6 scroll-reveal hover-glow">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h3 class="font-bold text-xl mb-1">مطور أنظمة صحية (Health IT)</h3>
+            <p class="text-secondary font-semibold">القسم: تقنية المعلومات</p>
+          </div>
+          <span class="badge badge-accent">دوام كامل</span>
+        </div>
+        <p class="text-slate-600 dark:text-slate-400 mb-4">مطلوب مطور Full Stack للعمل على تطوير أنظمة المستشفى الإلكترونية والتطبيقات الصحية.</p>
+        <div class="flex items-center gap-4 text-sm text-slate-500 mb-4">
+          <span><i class="fas fa-map-marker-alt ml-1"></i> القاهرة</span>
+          <span><i class="fas fa-briefcase ml-1"></i> 3+ سنوات</span>
+          <span><i class="fas fa-money-bill-wave ml-1"></i> competitive</span>
+        </div>
+        <button onclick="openJobModal('مطور أنظمة صحية')" class="btn-primary text-sm w-full">
+          <i class="fas fa-paper-plane ml-2"></i> التقديم الآن
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Job Application Modal -->
+<div class="modal-overlay" id="jobModal">
+  <div class="modal-content glass w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto rounded-3xl">
+    <div class="p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold font-cairo">التقديم على الوظيفة</h3>
+        <button onclick="closeModal('jobModal')" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <div class="mb-6 p-4 bg-secondary/10 rounded-xl">
+        <div class="text-sm text-slate-500">الوظيفة:</div>
+        <div class="font-bold text-lg" id="jobTitle"></div>
+      </div>
+      <form onsubmit="submitJob(event)">
+        <div class="space-y-4">
+          <div>
+            <label class="block font-semibold mb-2">الاسم الكامل</label>
+            <input type="text" class="form-input" required placeholder="أدخل اسمك الكامل">
+          </div>
+          <div>
+            <label class="block font-semibold mb-2">البريد الإلكتروني</label>
+            <input type="email" class="form-input" required placeholder="email@example.com">
+          </div>
+          <div>
+            <label class="block font-semibold mb-2">رقم الهاتف</label>
+            <input type="tel" class="form-input" required placeholder="01xxxxxxxxx">
+          </div>
+          <div>
+            <label class="block font-semibold mb-2">السيرة الذاتية</label>
+            <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl p-8 text-center hover:border-secondary transition cursor-pointer">
+              <i class="fas fa-cloud-upload-alt text-3xl text-slate-400 mb-2"></i>
+              <div class="text-slate-500">اسحب الملف هنا أو اضغط للاختيار</div>
+              <div class="text-xs text-slate-400 mt-1">PDF, DOC, DOCX (Max 5MB)</div>
+            </div>
+          </div>
+          <div>
+            <label class="block font-semibold mb-2">رسالة تغطية</label>
+            <textarea rows="4" class="form-input" placeholder="اكتب نبذة عن خبراتك ولماذا تريد الانضمام إلينا..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary w-full mt-6">
+          <i class="fas fa-paper-plane ml-2"></i> إرسال الطلب
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Section -->
+<section id="faq" class="section-padding bg-white dark:bg-slate-800">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">الأسئلة الشائعة</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">الأسئلة الأكثر شيوعاً</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">إجابات على استفساراتك الأكثر شيوعاً</p>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">كيف يمكنني حجز موعد في المستشفى؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            يمكنك حجز موعد بعدة طرق: عبر موقعنا الإلكتروني من خلال نظام الحجز الذكي، أو بالاتصال على رقم الحجز 19199، أو عبر تطبيق المستشفى على الهاتف المحمول. النظام يتيح لك اختيار القسم والطبيب والتاريخ والوقت المناسب لك.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">ما هي أوقات دوام العيادات الخارجية؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            العيادات الخارجية تعمل من السبت إلى الخميس من 8:00 صباحاً حتى 10:00 مساءً. بعض العيادات المتخصصة قد تكون متاحة حتى منتصف الليل. يمكنك التحقق من أوقات عمل كل قسم في صفحة الأقسام الطبية.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">هل المستشفى يقبل التأمين الصحي؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            نعم، المستشفى يقبل معظم شركات التأمين الصحي في مصر. نتعامل مع أكثر من 50 شركة تأمين. يمكنك التحقق من قبول تأمينك بالاتصال على رقم الاستفسارات أو عبر الموقع الإلكتروني.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">ما هي تكلفة الكشف الطبي؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            تختلف تكلفة الكشف حسب التخصص والطبيب. تبدأ الأسعار من 300 جنيه للكشف العام وتصل إلى 1500 جنيه للاستشارات المتخصصة مع كبار الأطباء. يمكنك معرفة الأسعار عند الحجز.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">هل يوجد موقف سيارات؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            نعم، المستشفى يحتوي على موقف سيارات متعدد الطوابق بسعة 500 سيارة. الموقف مجاني للمرضى والزوار. كما يوجد موقف خاص لذوي الاحتياجات الخاصة بالقرب من المدخل الرئيسي.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">كيف يمكنني الحصول على تقرير طبي؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            يمكنك الحصول على تقرير طبي من قسم السجلات الطبية في الطابق الأرضي. يجب إحضار بطاقة الرقم القومي وموعد الكشف. التقارير تُصدر خلال 24 ساعة. يمكنك أيضاً طلب التقرير إلكترونياً عبر الموقع.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">هل يوجد خدمة الإسعاف الجوي؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            نعم، المستشفى يوفر خدمة الإسعاف الجوي للحالات الحرجة. المروحية مجهزة بكامل معدات الإنعاش والعناية المركزة. يمكن طلب الخدمة عبر رقم الطوارئ 19199.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item glass-card scroll-reveal">
+        <button class="w-full p-6 flex items-center justify-between text-right" onclick="toggleFaq(this)">
+          <span class="font-bold text-lg">هل يوجد فندق للمرافقين؟</span>
+          <i class="fas fa-chevron-down faq-icon text-secondary"></i>
+        </button>
+        <div class="faq-answer">
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+            نعم، يوجد فندق داخل المستشفى للمرافقين بأسعار خاصة. كما نتعاون مع فنادق مجاورة لتوفير إقامة مريحة للمرافقين بأسعار مخفضة. يمكن الحجز عبر قسم الاستقبال.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partners Section -->
+<section class="section-padding bg-slate-50 dark:bg-slate-900">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">شركاء النجاح</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">شركاؤنا في التميز</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">نتعاون مع أفضل المؤسسات الطبية والأكاديمية العالمية</p>
+    </div>
+
+    <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">Mayo Clinic</div>
+        </div>
+      </div>
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">Johns Hopkins</div>
+        </div>
+      </div>
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">Cleveland Clinic</div>
+        </div>
+      </div>
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">Harvard Med</div>
+        </div>
+      </div>
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">Stanford H.</div>
+        </div>
+      </div>
+      <div class="scroll-reveal hover:opacity-100 transition-opacity">
+        <div class="w-32 h-20 flex items-center justify-center">
+          <div class="text-2xl font-black text-primary dark:text-white">WHO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section-padding bg-white dark:bg-slate-800">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16 scroll-reveal">
+      <span class="badge badge-primary mb-4">تواصل معنا</span>
+      <h2 class="text-4xl md:text-5xl font-black font-cairo mb-4 gradient-text">نحن هنا لمساعدتك</h2>
+      <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-lg">تواصل معنا عبر أي من قنوات الاتصال المتاحة</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="scroll-reveal">
+        <div class="glass-card p-8">
+          <h3 class="text-2xl font-bold font-cairo mb-8">أرسل لنا رسالة</h3>
+          <form onsubmit="submitContact(event)">
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label class="block font-semibold mb-2">الاسم الكامل</label>
+                <input type="text" class="form-input" required placeholder="أدخل اسمك">
+              </div>
+              <div>
+                <label class="block font-semibold mb-2">رقم الهاتف</label>
+                <input type="tel" class="form-input" required placeholder="01xxxxxxxxx">
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block font-semibold mb-2">البريد الإلكتروني</label>
+              <input type="email" class="form-input" required placeholder="email@example.com">
+            </div>
+            <div class="mb-6">
+              <label class="block font-semibold mb-2">الموضوع</label>
+              <select class="form-input">
+                <option>استفسار عام</option>
+                <option>حجز موعد</option>
+                <option>شكوى</option>
+                <option>اقتراح</option>
+                <option>أخرى</option>
+              </select>
+            </div>
+            <div class="mb-6">
+              <label class="block font-semibold mb-2">الرسالة</label>
+              <textarea rows="5" class="form-input" required placeholder="اكتب رسالتك هنا..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary w-full text-lg">
+              <i class="fas fa-paper-plane ml-2"></i> إرسال الرسالة
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <div class="space-y-6">
+          <div class="glass-card p-6 flex items-start gap-4 hover-glow">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xl shrink-0">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">العنوان الرئيسي</h4>
+              <p class="text-slate-600 dark:text-slate-400">123 شارع النيل، حي Garden City، القاهرة، مصر</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex items-start gap-4 hover-glow">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xl shrink-0">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">أرقام الهاتف</h4>
+              <p class="text-slate-600 dark:text-slate-400">
+                <a href="tel:19199" class="hover:text-secondary transition">19199 (الطوارئ)</a><br>
+                <a href="tel:0234567890" class="hover:text-secondary transition">02-3456-7890</a><br>
+                <a href="tel:01234567890" class="hover:text-secondary transition">0123-456-7890</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex items-start gap-4 hover-glow">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xl shrink-0">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">البريد الإلكتروني</h4>
+              <p class="text-slate-600 dark:text-slate-400">
+                <a href="mailto:info@smarthospital.com" class="hover:text-secondary transition">info@smarthospital.com</a><br>
+                <a href="mailto:appointments@smarthospital.com" class="hover:text-secondary transition">appointments@smarthospital.com</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex items-start gap-4 hover-glow">
+            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-xl shrink-0">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-lg mb-1">أوقات العمل</h4>
+              <p class="text-slate-600 dark:text-slate-400">
+                العيادات: السبت - الخميس 8:00 ص - 10:00 م<br>
+                الطوارئ: 24 ساعة / 7 أيام<br>
+                المختبر: السبت - الخميس 7:00 ص - 11:00 م
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6">
+            <h4 class="font-bold text-lg mb-4">مواقع التواصل الاجتماعي</h4>
+            <div class="flex gap-3">
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-sky-500 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-pink-600 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <a href="#" class="social-icon w-12 h-12 rounded-xl bg-blue-700 flex items-center justify-center text-white text-xl">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branches -->
+    <div class="mt-16">
+      <h3 class="text-3xl font-bold font-cairo text-center mb-12 scroll-reveal">فروعنا</h3>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glass-card p-6 scroll-reveal hover-lift hover-glow">
+          <div class="h-48 bg-slate-200 dark:bg-slate-700 rounded-xl mb-4 flex items-center justify-center img-placeholder">
+            <i class="fas fa-hospital text-4xl text-slate-400"></i>
+          </div>
+          <h4 class="font-bold text-xl mb-2">الفرع الرئيسي - القاهرة</h4>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-3">123 شارع النيل، Garden City</p>
+          <div class="flex items-center gap-2 text-sm text-secondary">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:0234567890">02-3456-7890</a>
+          </div>
+        </div>
+        <div class="glass-card p-6 scroll-reveal hover-lift hover-glow">
+          <div class="h-48 bg-slate-200 dark:bg-slate-700 rounded-xl mb-4 flex items-center justify-center img-placeholder">
+            <i class="fas fa-hospital text-4xl text-slate-400"></i>
+          </div>
+          <h4 class="font-bold text-xl mb-2">فرع الجيزة</h4>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-3">45 شارع الهرم، المهندسين</p>
+          <div class="flex items-center gap-2 text-sm text-secondary">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:0235678901">02-3567-8901</a>
+          </div>
+        </div>
+        <div class="glass-card p-6 scroll-reveal hover-lift hover-glow">
+          <div class="h-48 bg-slate-200 dark:bg-slate-700 rounded-xl mb-4 flex items-center justify-center img-placeholder">
+            <i class="fas fa-hospital text-4xl text-slate-400"></i>
+          </div>
+          <h4 class="font-bold text-xl mb-2">فرع التجمع الخامس</h4>
+          <p class="text-slate-600 dark:text-slate-400 text-sm mb-3">المنطقة الأولى، التجمع الخامس</p>
+          <div class="flex items-center gap-2 text-sm text-secondary">
+            <i class="fas fa-phone-alt"></i>
+            <a href="tel:0236789012">02-3678-9012</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="mt-16 scroll-reveal">
+      <div class="map-container h-96 bg-slate-200 dark:bg-slate-700 rounded-2xl flex items-center justify-center">
+        <div class="text-center">
+          <i class="fas fa-map-marked-alt text-6xl text-slate-400 mb-4"></i>
+          <div class="text-xl font-bold text-slate-500 mb-2">خريطة الموقع</div>
+          <a href="https://www.google.com/maps" target="_blank" class="btn-primary text-sm">
+            <i class="fas fa-external-link-alt ml-2"></i> فتح في Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-primary dark:bg-slate-950 text-white pt-20 pb-8">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-primary border-2 border-white/30 flex items-center justify-center text-white text-xl">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl font-cairo">المستشفى الذكي</h3>
+            <p class="text-xs text-white/70">Smart Hospital</p>
+          </div>
+        </div>
+        <p class="text-white/70 leading-relaxed mb-6">
+          نقدم أرقى مستويات الرعاية الصحية بأحدث التقنيات والكوادر الطبية المتميزة. صحتك هي أولويتنا الأولى.
+        </p>
+        <div class="flex gap-3">
+          <a href="#" class="social-icon w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="social-icon w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="social-icon w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="social-icon w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-secondary transition">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-lg mb-6">روابط سريعة</h4>
+        <ul class="space-y-3">
+          <li><a href="#about" class="text-white/70 hover:text-secondary transition">عن المستشفى</a></li>
+          <li><a href="#departments" class="text-white/70 hover:text-secondary transition">الأقسام الطبية</a></li>
+          <li><a href="#doctors" class="text-white/70 hover:text-secondary transition">الأطباء</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">الخدمات</a></li>
+          <li><a href="#booking" class="text-white/70 hover:text-secondary transition">حجز موعد</a></li>
+          <li><a href="#news" class="text-white/70 hover:text-secondary transition">الأخبار</a></li>
+          <li><a href="#jobs" class="text-white/70 hover:text-secondary transition">الوظائف</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-lg mb-6">الخدمات الطبية</h4>
+        <ul class="space-y-3">
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">الفحوصات الشاملة</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">العمليات الجراحية</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">المختبر المتقدم</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">الأشعة التشخيصية</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">الرعاية المنزلية</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">التطعيمات</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-secondary transition">الاستشارات الطبية</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-lg mb-6">النشرة البريدية</h4>
+        <p class="text-white/70 mb-4">اشترك للحصول على أحدث الأخبار والنصائح الصحية</p>
+        <form onsubmit="subscribeNewsletter(event)">
+          <div class="flex gap-2">
+            <input type="email" class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-secondary" placeholder="بريدك الإلكتروني" required>
+            <button type="submit" class="px-4 py-3 rounded-xl bg-secondary text-white hover:bg-secondary-light transition">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+        <div class="mt-6">
+          <div class="text-white/70 text-sm mb-2">حمل تطبيقنا</div>
+          <div class="flex gap-2">
+            <a href="#" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition text-sm flex items-center gap-2">
+              <i class="fab fa-apple text-lg"></i> App Store
+            </a>
+            <a href="#" class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition text-sm flex items-center gap-2">
+              <i class="fab fa-google-play text-lg"></i> Google Play
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-white/60 text-sm">
+        © 2026 المستشفى الذكي. جميع الحقوق محفوظة.
+      </div>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="text-white/60 hover:text-white transition">سياسة الخصوصية</a>
+        <a href="#" class="text-white/60 hover:text-white transition">شروط الاستخدام</a>
+        <a href="#" class="text-white/60 hover:text-white transition">خريطة الموقع</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- AI Chat Widget -->
+<div class="chat-widget no-print">
+  <div class="chat-panel glass" id="chatPanel">
+    <div class="bg-gradient-to-r from-primary to-secondary p-4 text-white">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div>
+          <div class="font-bold">المساعد الطبي الذكي</div>
+          <div class="text-xs text-white/80 flex items-center gap-1">
+            <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+            متصل الآن
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-80 overflow-y-auto p-4 space-y-4" id="chatMessages">
+      <div class="flex gap-3">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xs shrink-0">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="bg-slate-100 dark:bg-slate-700 p-3 rounded-2xl rounded-tr-none text-sm max-w-[80%]">
+          مرحباً! أنا المساعد الطبي الذكي للمستشفى. كيف يمكنني مساعدتك اليوم؟
+        </div>
+      </div>
+    </div>
+    <div class="p-4 border-t border-slate-200 dark:border-slate-700">
+      <div class="flex gap-2">
+        <input type="text" id="chatInput" class="flex-1 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-transparent focus:outline-none focus:border-secondary text-sm" placeholder="اكتب سؤالك هنا..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+        <button onclick="sendChatMessage()" class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-primary text-white flex items-center justify-center hover:scale-110 transition">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+      <div class="flex gap-2 mt-2 flex-wrap">
+        <button onclick="quickChat('كيف أحجز موعد؟')" class="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-secondary/20 transition">كيف أحجز موعد؟</button>
+        <button onclick="quickChat('أوقات العمل')" class="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-secondary/20 transition">أوقات العمل</button>
+        <button onclick="quickChat('أرقام الطوارئ')" class="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 hover:bg-secondary/20 transition">أرقام الطوارئ</button>
+      </div>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()" id="chatBtn">
+    <i class="fas fa-comment-medical" id="chatIcon"></i>
+  </button>
+</div>
+
+<!-- Emergency Modal -->
+<div class="modal-overlay" id="emergencyModal">
+  <div class="modal-content glass w-full max-w-md mx-4 rounded-3xl text-center p-8">
+    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-3xl mx-auto mb-6 animate-heartbeat">
+      <i class="fas fa-ambulance"></i>
+    </div>
+    <h3 class="text-2xl font-bold font-cairo mb-4 text-red-600">اتصال طوارئ</h3>
+    <p class="text-slate-600 dark:text-slate-400 mb-8">اختر رقم الطوارئ للاتصال فوراً</p>
+    <div class="space-y-4">
+      <a href="tel:19199" class="flex items-center justify-center gap-3 bg-red-600 text-white py-4 rounded-xl font-bold text-xl hover:bg-red-700 transition btn-press">
+        <i class="fas fa-phone-alt"></i>
+        19199 - الطوارئ
+      </a>
+      <a href="tel:01234567890" class="flex items-center justify-center gap-3 bg-red-500/20 text-red-700 dark:text-red-400 py-4 rounded-xl font-bold text-lg hover:bg-red-500/30 transition">
+        <i class="fas fa-mobile-alt"></i>
+        0123 456 7890
+      </a>
+      <a href="tel:0234567890" class="flex items-center justify-center gap-3 bg-slate-100 dark:bg-slate-700 py-4 rounded-xl font-bold text-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+        <i class="fas fa-phone"></i>
+        02-3456-7890
+      </a>
+    </div>
+    <button onclick="closeModal('emergencyModal')" class="mt-6 text-slate-500 hover:text-slate-700 font-semibold">
+      إلغاء
+    </button>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast glass" id="toast">
+  <div class="flex items-center gap-3">
+    <i class="fas fa-check-circle text-green-500 text-xl"></i>
+    <span id="toastMessage">تمت العملية بنجاح!</span>
+  </div>
+</div>
+
+<script>
+// ============ DATA ============
+const departments = [
+  { id: 'cardiology', name: 'قلب وأوعية دموية', icon: 'fa-heart', desc: 'قسم متخصص في تشخيص وعلاج أمراض القلب والأوعية الدموية بأحدث التقنيات.', services: ['قسطرة القلب', 'زراعة القلب', 'تخطيط القلب', 'علاج فشل القلب'], doctors: ['د. أحمد محمود', 'د. سارة خالد', 'د. محمد علي'], equipment: ['قسطرة دقيقة', 'MRI قلب', 'ECG متنقل'], hours: '8:00 ص - 10:00 م', color: 'from-red-500 to-red-700' },
+  { id: 'neurology', name: 'مخ وأعصاب', icon: 'fa-brain', desc: 'رعاية متخصصة لأمراض المخ والأعصاب والعمود الفقري.', services: ['جراحة المخ', 'علاج السكتة الدماغية', 'تخطيط الدماغ', 'علاج الصرع'], doctors: ['د. خالد عبدالله', 'د. نورا سامي', 'د. يوسف أحمد'], equipment: ['MRI 3 تسلا', 'CT 640 شريحة', 'EEG رقمي'], hours: '9:00 ص - 9:00 م', color: 'from-purple-500 to-purple-700' },
+  { id: 'orthopedics', name: 'عظام ومفاصل', icon: 'fa-bone', desc: 'علاج إصابات وامراض العظام والمفاصل والعمود الفقري.', services: ['جراحة العظام', 'استبدال المفاصل', 'علاج الكسور', 'العلاج الطبيعي'], doctors: ['د. عمرو حسين', 'د. ليلى محمود', 'د. طارق سعيد'], equipment: ['أشعة عظام', 'MRI مفاصل', 'روبوت جراحة العظام'], hours: '8:00 ص - 10:00 م', color: 'from-orange-500 to-orange-700' },
+  { id: 'pediatrics', name: 'أطفال', icon: 'fa-baby', desc: 'رعاية صحية شاملة للأطفال من الولادة حتى المراهقة.', services: ['رعاية حديثي الولادة', 'تطعيمات', 'علاج أمراض الأطفال', 'تغذية الأطفال'], doctors: ['د. هالة أحمد', 'د. كريم محمد', 'د. رنا علي'], equipment: ['حاضنات', 'أشعة أطفال', 'جهاز تخطيط سمع'], hours: '24 ساعة', color: 'from-pink-500 to-pink-700' },
+  { id: 'gynecology', name: 'نساء وتوليد', icon: 'fa-female', desc: 'رعاية صحية متكاملة للمرأة في جميع مراحل حياتها.', services: ['متابعة الحمل', 'ولادة طبيعية', 'جراحة نسائية', 'علاج العقم'], doctors: ['د. منى سالم', 'د. هبة كمال', 'د. دينا فؤاد'], equipment: ['سونار نسائي', 'جهاز ولادة', 'منظار نسائي'], hours: '24 ساعة', color: 'from-rose-500 to-rose-700' },
+  { id: 'dental', name: 'أسنان', icon: 'fa-tooth', desc: 'علاج الأسنان التجميلي والترميمي بأحدث التقنيات.', services: ['تجميل الأسنان', 'زراعة الأسنان', 'تقويم الأسنان', 'علاج العصب'], doctors: ['د. أحمد سامي', 'د. ياسمين كريم', 'د. محمود طارق'], equipment: ['أشعة أسنان', 'ليزر أسنان', 'CADCAM'], hours: '10:00 ص - 9:00 م', color: 'from-cyan-500 to-cyan-700' },
+  { id: 'dermatology', name: 'جلدية', icon: 'fa-hand-dots', desc: 'علاج أمراض الجلد والتجميل بالليزر.', services: ['علاج حب الشباب', 'ليزر إزالة الشعر', 'تجميل البشرة', 'علاج الأكزيما'], doctors: ['د. سارة نبيل', 'د. أحمد فؤاد', 'د. ندى حسن'], equipment: ['ليزر فائق', 'أشعة UV', 'جهاز تقشير'], hours: '10:00 ص - 8:00 م', color: 'from-amber-500 to-amber-700' },
+  { id: 'ophthalmology', name: 'عيون', icon: 'fa-eye', desc: 'تشخيص وعلاج أمراض العيون بالتقنيات المتقدمة.', services: ['تصحيح النظر', 'جراحة الماء الأبيض', 'علاج الجلوكوما', 'فحص النظر'], doctors: ['د. طارق محمود', 'د. هند علي', 'د. سامي كمال'], equipment: ['ليزر عيون', 'OCT', 'فحص مجال الرؤية'], hours: '9:00 ص - 9:00 م', color: 'from-indigo-500 to-indigo-700' },
+  { id: 'ent', name: 'أنف وأذن وحنجرة', icon: 'fa-head-side-cough', desc: 'علاج أمراض الأنف والأذن والحنجرة والجراحة التجميلية.', services: ['جراحة الأنف', 'علاج طنين الأذن', 'علاج التهاب الحنجرة', 'تجميل الأنف'], doctors: ['د. رامي سعيد', 'د. نهى أحمد', 'د. خالد منير'], equipment: ['منظار أنف', 'أشعة أذن', 'جهاز سمع'], hours: '9:00 ص - 9:00 م', color: 'from-teal-500 to-teal-700' },
+  { id: 'oncology', name: 'أورام', icon: 'fa-ribbon', desc: 'علاج الأورام بالعلاج الكيميائي والإشعاعي والجراحة.', services: ['علاج كيميائي', 'علاج إشعاعي', 'جراحة أورام', 'علاج هرموني'], doctors: ['د. أمل خالد', 'د. وائل محمد', 'د. سمية أحمد'], equipment: ['معجل خطي', 'PET-CT', 'جهاز العلاج الإشعاعي'], hours: '8:00 ص - 10:00 م', color: 'from-violet-500 to-violet-700' },
+  { id: 'nephrology', name: 'كلى', icon: 'fa-kidney', desc: 'علاج أمراض الكلى والفشل الكلوي وزراعة الكلى.', services: ['غسيل كلى', 'زراعة كلى', 'علاج حصوات', 'علاج فشل كلوي'], doctors: ['د. هاني فؤاد', 'د. سمر علي', 'د. عادل حسن'], equipment: ['أجهزة غسيل كلى', 'أشعة كلى', 'منظار كلى'], hours: '24 ساعة', color: 'from-blue-500 to-blue-700' },
+  { id: 'gastroenterology', name: 'جهاز هضمي', icon: 'fa-stomach', desc: 'علاج أمراض الجهاز الهضمي والكبد والمناظير.', services: ['منظار هضمي', 'علاج الكبد', 'علاج القولون', 'منظار القولون'], doctors: ['د. سامي نبيل', 'د. دعاء محمد', 'د. أشرف كمال'], equipment: ['منظار علوي', 'منظار قولون', 'أشعة هضمية'], hours: '8:00 ص - 10:00 م', color: 'from-green-500 to-green-700' },
+  { id: 'emergency', name: 'طوارئ', icon: 'fa-ambulance', desc: 'قسم طوارئ مجهز بأحدث التقنيات على مدار 24 ساعة.', services: ['إسعاف فوري', 'علاج حالات حرجة', 'إنعاش قلبي', 'إسعاف جراحي'], doctors: ['د. فريق طوارئ 24/7'], equipment: ['عربات إسعاف', 'أجهزة إنعاش', 'أشعة طوارئ'], hours: '24 ساعة', color: 'from-red-600 to-red-800' },
+  { id: 'radiology', name: 'أشعة', icon: 'fa-x-ray', desc: 'أحدث أجهزة الأشعة التشخيصية والتداخلية.', services: ['MRI', 'CT', 'أشعة سينية', 'أشعة تداخلية'], doctors: ['د. أحمد راضي', 'د. سهى كمال', 'د. ياسر فؤاد'], equipment: ['MRI 3 تسلا', 'CT 640 شريحة', 'PET-CT', 'أشعة رقمية'], hours: '24 ساعة', color: 'from-sky-500 to-sky-700' },
+  { id: 'laboratory', name: 'مختبر', icon: 'fa-flask', desc: 'مختبر معتمد دولياً يقدم أكثر من 2000 تحليل.', services: ['تحاليل دم', 'تحاليل بول', 'تحاليل جينية', 'تحاليل أورام'], doctors: ['د. فريق مختبر متخصص'], equipment: ['أجهزة تحليل آلي', 'PCR', 'تحليل جيني'], hours: '24 ساعة', color: 'from-emerald-500 to-emerald-700' }
+];
+
+const doctors = [
+  { id: 1, name: 'د. أحمد محمود', specialty: 'قلب وأوعية دموية', image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80', experience: 20, qualifications: 'دكتوراه جراحة القلب - جامعة هارفارد', rating: 4.9, reviews: 320, hours: 'السبت - الأربعاء: 9:00 ص - 2:00 م', about: 'أستاذ جراحة القلب بأكثر من 20 سنة خبرة في إجراء العمليات المعقدة. حاصل على جائزة أفضل جراح قلب في المنطقة لعام 2024.', dept: 'cardiology' },
+  { id: 2, name: 'د. سارة خالد', specialty: 'قلب وأوعية دموية', image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80', experience: 15, qualifications: 'زمالة القسطرة التداخلية - Mayo Clinic', rating: 4.8, reviews: 280, hours: 'السبت - الخميس: 10:00 ص - 6:00 م', about: 'أخصائية قسطرة قلب تداخلية متخصصة في علاج أمراض الشرايين التاجية بالقسطرة.', dept: 'cardiology' },
+  { id: 3, name: 'د. خالد عبدالله', specialty: 'مخ وأعصاب', image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&q=80', experience: 18, qualifications: 'دكتوراه جراحة المخ - جامعة أكسفورد', rating: 4.9, reviews: 250, hours: 'الأحد - الخميس: 9:00 ص - 3:00 م', about: 'جراح مخ وأعصاب متخصص في جراحة الأورام الدماغية والعمود الفقري باستخدام الروبوت.', dept: 'neurology' },
+  { id: 4, name: 'د. نورا سامي', specialty: 'مخ وأعصاب', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80', experience: 12, qualifications: 'زمالة الأعصاب - Johns Hopkins', rating: 4.7, reviews: 190, hours: 'السبت - الأربعاء: 10:00 ص - 5:00 م', about: 'أخصائية أعصاب متخصصة في علاج الصرع والسكتات الدماغية والاضطرابات الحركية.', dept: 'neurology' },
+  { id: 5, name: 'د. عمرو حسين', specialty: 'عظام ومفاصل', image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400&q=80', experience: 22, qualifications: 'دكتوراه جراحة العظام - جامعة ستانفورد', rating: 4.9, reviews: 410, hours: 'السبت - الخميس: 8:00 ص - 2:00 م', about: 'جراح عظام متخصص في استبدال مفصل الركبة والورك باستخدام الروبوت.', dept: 'orthopedics' },
+  { id: 6, name: 'د. ليلى محمود', specialty: 'عظام ومفاصل', image: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400&q=80', experience: 14, qualifications: 'زمالة جراحة العمود الفقري - Cleveland Clinic', rating: 4.8, reviews: 220, hours: 'الأحد - الخميس: 9:00 ص - 4:00 م', about: 'أخصائية جراحة العمود الفقري والمناظير العظمية.', dept: 'orthopedics' },
+  { id: 7, name: 'د. هالة أحمد', specialty: 'أطفال', image: 'https://images.unsplash.com/photo-1614608682850-e0d6b30629c7?w=400&q=80', experience: 16, qualifications: 'دكتوراه طب الأطفال - جامعة القاهرة', rating: 4.9, reviews: 350, hours: 'السبت - الخميس: 9:00 ص - 9:00 م', about: 'أستاذة طب الأطفال متخصصة في حديثي الولادة والأمراض المعدية.', dept: 'pediatrics' },
+  { id: 8, name: 'د. منى سالم', specialty: 'نساء وتوليد', image: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400&q=80', experience: 19, qualifications: 'دكتوراه نساء وتوليد - جامعة لندن', rating: 4.9, reviews: 380, hours: 'السبت - الخميس: 10:00 ص - 8:00 م', about: 'أستاذة نساء وتوليد متخصصة في الحمل العالي الخطورة وجراحة المناظير.', dept: 'gynecology' }
+];
+
+const chatResponses = {
+  'حجز': 'يمكنك حجز موعد عبر نظام الحجز الإلكتروني في الموقع. اختر القسم والطبيب والتاريخ والوقت المناسب لك.',
+  'موعد': 'يمكنك حجز موعد عبر نظام الحجز الإلكتروني في الموقع. اختر القسم والطبيب والتاريخ والوقت المناسب لك.',
+  'طوارئ': 'رقم الطوارئ: 19199. قسم الطوارئ يعمل 24 ساعة.',
+  'عمل': 'العيادات تعمل من السبت إلى الخميس 8:00 ص - 10:00 م. الطوارئ 24 ساعة.',
+  'وقت': 'العيادات تعمل من السبت إلى الخميس 8:00 ص - 10:00 م. الطوارئ 24 ساعة.',
+  'سعر': 'تختلف الأسعار حسب التخصص. تبدأ من 300 جنيه للكشف العام. يمكنك معرفة السعر عند الحجز.',
+  'تأمين': 'نعم، نقبل معظم شركات التأمين. اتصل على 02-3456-7890 للتأكد.',
+  'عنوان': 'العنوان: 123 شارع النيل، Garden City، القاهرة.',
+  'موقع': 'العنوان: 123 شارع النيل، Garden City، القاهرة.',
+  'تحليل': 'المختبر يعمل 24 ساعة ويقدم أكثر من 2000 تحليل.',
+  'أشعة': 'قسم الأشعة يعمل 24 ساعة ويحتوي على MRI 3 تسلا و CT 640 شريحة.',
+  'عملية': 'نقدم جميع العمليات الجراحية بما في ذلك الجراحة الروبوتية. احجز استشارة للتقييم.',
+  'طفل': 'قسم الأطفال يعمل 24 ساعة مع رعاية حديثي الولادة المجهزة.',
+  'ولادة': 'قسم النساء والتوليد يعمل 24 ساعة مع غرف ولادة مجهزة.',
+  'قلب': 'قسم القلب يقدم قسطرة، زراعة قلب، وعلاج فشل القلب.',
+  'سرطان': 'قسم الأورام يقدم علاج كيميائي وإشعاعي وجراحة أورام.',
+  'عظام': 'قسم العظام يقدم جراحة العظام واستبدال المفاصل والعلاج الطبيعي.',
+  'عين': 'قسم العيون يقدم تصحيح النظر وجراحة الماء الأبيض وعلاج الجلوكوما.',
+  'أسنان': 'قسم الأسنان يعمل 10:00 ص - 9:00 م ويقدم تجميل وزراعة وتقويم.',
+  'جلد': 'قسم الجلدية يعمل 10:00 ص - 8:00 م ويقدم ليزر وعلاج حب الشباب.',
+  'كبد': 'قسم الجهاز الهضمي يقدم علاج الكبد والمناظير.',
+  'كلى': 'قسم الكلى يعمل 24 ساعة ويقدم غسيل كلى وزراعة كلى.',
+};
+
+// ============ STATE ============
+let currentStep = 1;
+let bookingData = { dept: '', doctor: '', date: '', time: '' };
+let chatOpen = false;
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 1500);
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('bookingDate').min = today;
+  renderDepartments();
+  renderDoctors();
+  renderBookingDepts();
+  initScrollAnimations();
+  window.addEventListener('scroll', () => {
+    const header = document.getElementById('header');
+    if (window.scrollY > 100) { header.classList.add('scrolled'); }
+    else { header.classList.remove('scrolled'); }
+  });
+  createParticles();
+  initCounters();
+  document.getElementById('bookingDate').addEventListener('change', function() {
+    bookingData.date = this.value;
+    document.getElementById('dateNextBtn').disabled = false;
+  });
+});
+
+// ============ RENDER FUNCTIONS ============
+function renderDepartments() {
+  const grid = document.getElementById('departmentsGrid');
+  grid.innerHTML = departments.map(dept => `
+    <div class="dept-card glass-card p-6 cursor-pointer scroll-reveal" onclick="openDeptModal('${dept.id}')">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${dept.color} flex items-center justify-center text-white text-2xl mb-4 dept-icon">
+        <i class="fas ${dept.icon}"></i>
+      </div>
+      <h3 class="font-bold text-xl mb-2">${dept.name}</h3>
+      <p class="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-2">${dept.desc}</p>
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-slate-500"><i class="fas fa-clock ml-1"></i>${dept.hours}</span>
+        <span class="text-secondary text-sm font-semibold">المزيد <i class="fas fa-arrow-left text-xs"></i></span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDoctors() {
+  const grid = document.getElementById('doctorsGrid');
+  grid.innerHTML = doctors.map(doc => `
+    <div class="doctor-card glass-card overflow-hidden scroll-reveal">
+      <div class="relative h-72 overflow-hidden">
+        <img src="${doc.image}" alt="${doc.name}" class="doctor-img w-full h-full object-cover">
+        <div class="doctor-overlay absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent flex items-end p-6">
+          <button onclick="openDoctorModal(${doc.id})" class="btn-primary text-sm w-full">
+            <i class="fas fa-user-md ml-2"></i> الملف الشخصي
+          </button>
+        </div>
+        <div class="absolute top-4 right-4 glass px-3 py-1 rounded-full text-xs font-bold text-white">
+          <i class="fas fa-star text-yellow-400 ml-1"></i>${doc.rating}
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-bold text-xl mb-1">${doc.name}</h3>
+        <p class="text-secondary font-semibold text-sm mb-3">${doc.specialty}</p>
+        <div class="flex items-center gap-4 text-sm text-slate-500">
+          <span><i class="fas fa-briefcase ml-1"></i>${doc.experience} سنة</span>
+          <span><i class="fas fa-comment ml-1"></i>${doc.reviews} تقييم</span>
+        </div>
+        <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <div class="text-xs text-slate-500 mb-2"><i class="fas fa-clock ml-1"></i>${doc.hours}</div>
+          <button onclick="bookDoctor(${doc.id})" class="btn-primary text-sm w-full">
+            <i class="fas fa-calendar-check ml-2"></i> احجز موعد
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBookingDepts() {
+  const container = document.getElementById('bookingDepts');
+  container.innerHTML = departments.map(dept => `
+    <button onclick="selectBookingDept('${dept.id}', '${dept.name}')" 
+            class="dept-select-btn p-4 rounded-xl border-2 border-slate-200 dark:border-slate-600 hover:border-secondary hover:bg-secondary/5 transition text-center"
+            data-dept="${dept.id}">
+      <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${dept.color} flex items-center justify-center text-white text-lg mx-auto mb-2">
+        <i class="fas ${dept.icon}"></i>
+      </div>
+      <div class="font-semibold text-sm">${dept.name}</div>
+    </button>
+  `).join('');
+}
+
+// ============ MODALS ============
+function openDeptModal(deptId) {
+  const dept = departments.find(d => d.id === deptId);
+  if (!dept) return;
+  const content = document.getElementById('deptModalContent');
+  content.innerHTML = `
+    <div class="flex justify-between items-start mb-6">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${dept.color} flex items-center justify-center text-white text-3xl">
+          <i class="fas ${dept.icon}"></i>
+        </div>
+        <div>
+          <h2 class="text-3xl font-bold font-cairo">${dept.name}</h2>
+          <p class="text-slate-500"><i class="fas fa-clock ml-1"></i> ${dept.hours}</p>
+        </div>
+      </div>
+      <button onclick="closeModal('deptModal')" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">${dept.desc}</p>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><i class="fas fa-hand-holding-medical text-secondary"></i> الخدمات</h3>
+        <ul class="space-y-3">${dept.services.map(s => `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-secondary"></i>${s}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><i class="fas fa-microscope text-secondary"></i> الأجهزة</h3>
+        <ul class="space-y-3">${dept.equipment.map(e => `<li class="flex items-center gap-2"><i class="fas fa-cog text-secondary"></i>${e}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div class="mt-8">
+      <h3 class="font-bold text-xl mb-4 flex items-center gap-2"><i class="fas fa-user-md text-secondary"></i> الأطباء</h3>
+      <div class="flex flex-wrap gap-3">${dept.doctors.map(d => `<span class="badge badge-primary">${d}</span>`).join('')}</div>
+    </div>
+    <div class="mt-8 text-center">
+      <button onclick="closeModal('deptModal'); bookDept('${dept.id}')" class="btn-primary text-lg">
+        <i class="fas fa-calendar-check ml-2"></i> احجز موعد في ${dept.name}
+      </button>
+    </div>
+  `;
+  document.getElementById('deptModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openDoctorModal(docId) {
+  const doc = doctors.find(d => d.id === docId);
+  if (!doc) return;
+  const content = document.getElementById('doctorModalContent');
+  content.innerHTML = `
+    <div class="flex justify-between items-start mb-6">
+      <button onclick="closeModal('doctorModal')" class="w-10 h-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-1/3">
+        <img src="${doc.image}" alt="${doc.name}" class="w-full rounded-2xl shadow-xl">
+        <div class="mt-4 text-center">
+          <div class="flex items-center justify-center gap-1 mb-2">
+            ${Array(5).fill(0).map((_, i) => `<i class="fas fa-star ${i < Math.floor(doc.rating) ? 'text-yellow-400' : 'text-slate-300'}"></i>`).join('')}
+          </div>
+          <div class="text-slate-500">${doc.rating} / 5 (${doc.reviews} تقييم)</div>
+        </div>
+      </div>
+      <div class="md:w-2/3">
+        <h2 class="text-3xl font-bold font-cairo mb-2">${doc.name}</h2>
+        <p class="text-secondary font-semibold text-lg mb-4">${doc.specialty}</p>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div class="glass p-4 rounded-xl text-center">
+            <div class="text-2xl font-black text-secondary">${doc.experience}</div>
+            <div class="text-sm text-slate-500">سنة خبرة</div>
+          </div>
+          <div class="glass p-4 rounded-xl text-center">
+            <div class="text-2xl font-black text-secondary">${doc.reviews}</div>
+            <div class="text-sm text-slate-500">تقييم إيجابي</div>
+          </div>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-bold mb-2">المؤهلات العلمية</h3>
+          <p class="text-slate-600 dark:text-slate-400">${doc.qualifications}</p>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-bold mb-2">نبذة عن الطبيب</h3>
+          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${doc.about}</p>
+        </div>
+        <div class="mb-6">
+          <h3 class="font-bold mb-2">أوقات العمل</h3>
+          <p class="text-slate-600 dark:text-slate-400"><i class="fas fa-clock ml-2 text-secondary"></i>${doc.hours}</p>
+        </div>
+        <button onclick="closeModal('doctorModal'); bookDoctor(${doc.id})" class="btn-primary text-lg">
+          <i class="fas fa-calendar-check ml-2"></i> احجز موعد مع ${doc.name}
+        </button>
+      </div>
+    </div>
+  `;
+  document.getElementById('doctorModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ============ BOOKING SYSTEM ============
+function selectBookingDept(deptId, deptName) {
+  bookingData.dept = deptId;
+  document.querySelectorAll('.dept-select-btn').forEach(btn => {
+    btn.classList.remove('border-secondary', 'bg-secondary/10');
+    if (btn.dataset.dept === deptId) { btn.classList.add('border-secondary', 'bg-secondary/10'); }
+  });
+  setTimeout(() => nextStep(2), 300);
+}
+
+function nextStep(step) {
+  document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + step).classList.add('active');
+  for (let i = 1; i <= 5; i++) {
+    const ind = document.getElementById('step' + i + 'Ind');
+    const line = document.getElementById('line' + (i - 1));
+    if (i < step) {
+      ind.classList.add('completed');
+      ind.classList.remove('active');
+      ind.innerHTML = '<i class="fas fa-check"></i>';
+      if (line) line.classList.add('completed');
+    } else if (i === step) {
+      ind.classList.add('active');
+      ind.classList.remove('completed');
+      ind.innerHTML = i;
+    } else {
+      ind.classList.remove('active', 'completed');
+      ind.innerHTML = i;
+      if (line) line.classList.remove('completed');
+    }
+  }
+  currentStep = step;
+  if (step === 2) { renderBookingDoctors(); }
+  else if (step === 4) { renderTimeSlots(); }
+  else if (step === 5) { updateSummary(); }
+}
+
+function prevStep(step) { nextStep(step); }
+
+function renderBookingDoctors() {
+  const container = document.getElementById('bookingDoctors');
+  const deptDoctors = doctors.filter(d => d.dept === bookingData.dept);
+  if (deptDoctors.length === 0) {
+    container.innerHTML = '<div class="text-center text-slate-500 col-span-2">لا يوجد أطباء متاحين حالياً في هذا القسم</div>';
+    return;
+  }
+  container.innerHTML = deptDoctors.map(doc => `
+    <button onclick="selectBookingDoctor(${doc.id}, '${doc.name}')" 
+            class="doctor-select-btn flex items-center gap-4 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-600 hover:border-secondary hover:bg-secondary/5 transition text-right w-full"
+            data-doctor="${doc.id}">
+      <img src="${doc.image}" alt="${doc.name}" class="w-16 h-16 rounded-xl object-cover">
+      <div class="text-right">
+        <div class="font-bold">${doc.name}</div>
+        <div class="text-sm text-slate-500">${doc.experience} سنة خبرة</div>
+        <div class="text-xs text-secondary">${doc.hours}</div>
+      </div>
+    </button>
+  `).join('');
+}
+
+function selectBookingDoctor(docId, docName) {
+  bookingData.doctor = docId;
+  document.querySelectorAll('.doctor-select-btn').forEach(btn => {
+    btn.classList.remove('border-secondary', 'bg-secondary/10');
+    if (btn.dataset.doctor == docId) { btn.classList.add('border-secondary', 'bg-secondary/10'); }
+  });
+  setTimeout(() => nextStep(3), 300);
+}
+
+function renderTimeSlots() {
+  const container = document.getElementById('timeSlots');
+  const times = ['9:00 ص', '9:30 ص', '10:00 ص', '10:30 ص', '11:00 ص', '11:30 ص', '12:00 م', '12:30 م', '1:00 م', '1:30 م', '2:00 م', '2:30 م', '3:00 م', '3:30 م', '4:00 م', '4:30 م', '5:00 م', '5:30 م', '6:00 م', '6:30 م'];
+  container.innerHTML = times.map((time, i) => `
+    <button onclick="selectTime('${time}')" 
+            class="time-slot ${i % 3 === 0 ? 'disabled' : ''}"
+            data-time="${time}"
+            ${i % 3 === 0 ? 'disabled' : ''}>
+      ${time}
+    </button>
+  `).join('');
+}
+
+function selectTime(time) {
+  bookingData.time = time;
+  document.querySelectorAll('.time-slot').forEach(btn => {
+    btn.classList.remove('selected');
+    if (btn.dataset.time === time) { btn.classList.add('selected'); }
+  });
+  document.getElementById('timeNextBtn').disabled = false;
+}
+
+function updateSummary() {
+  const dept = departments.find(d => d.id === bookingData.dept);
+  const doc = doctors.find(d => d.id === bookingData.doctor);
+  document.getElementById('summaryDept').textContent = dept ? dept.name : '';
+  document.getElementById('summaryDoctor').textContent = doc ? doc.name : '';
+  document.getElementById('summaryDate').textContent = bookingData.date;
+  document.getElementById('summaryTime').textContent = bookingData.time;
+}
+
+function confirmBooking() {
+  const name = document.getElementById('patientName').value;
+  const phone = document.getElementById('patientPhone').value;
+  if (!name || !phone) { showToast('يرجى ملء جميع الحقول المطلوبة'); return; }
+  const dept = departments.find(d => d.id === bookingData.dept);
+  const doc = doctors.find(d => d.id === bookingData.doctor);
+  const refNum = 'SH' + Date.now().toString().slice(-8);
+  document.getElementById('bookingRef').textContent = refNum;
+  document.getElementById('confirmDept').textContent = dept ? dept.name : '';
+  document.getElementById('confirmDoctor').textContent = doc ? doc.name : '';
+  document.getElementById('confirmDate').textContent = bookingData.date;
+  document.getElementById('confirmTime').textContent = bookingData.time;
+  document.getElementById('bookingConfirmModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  bookingData = { dept: '', doctor: '', date: '', time: '' };
+  currentStep = 1;
+  document.querySelectorAll('.booking-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.querySelectorAll('.step-indicator').forEach((ind, i) => {
+    ind.classList.remove('active', 'completed');
+    ind.innerHTML = i + 1;
+  });
+  document.getElementById('step1Ind').classList.add('active');
+  document.querySelectorAll('.step-line').forEach(l => l.classList.remove('completed'));
+}
+
+function bookDoctor(docId) {
+  const doc = doctors.find(d => d.id === docId);
+  if (doc) {
+    bookingData.dept = doc.dept;
+    bookingData.doctor = doc.id;
+    location.href = '#booking';
+    nextStep(3);
+  }
+}
+
+function bookDept(deptId) {
+  bookingData.dept = deptId;
+  location.href = '#booking';
+  nextStep(2);
+}
+
+// ============ CHAT WIDGET ============
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatPanel').classList.toggle('active', chatOpen);
+  document.getElementById('chatIcon').className = chatOpen ? 'fas fa-times' : 'fas fa-comment-medical';
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const message = input.value.trim();
+  if (!message) return;
+  addChatMessage(message, 'user');
+  input.value = '';
+  setTimeout(() => {
+    const response = getChatResponse(message);
+    addChatMessage(response, 'bot');
+  }, 1000);
+}
+
+function quickChat(message) {
+  addChatMessage(message, 'user');
+  setTimeout(() => {
+    const response = getChatResponse(message);
+    addChatMessage(response, 'bot');
+  }, 1000);
+}
+
+function addChatMessage(text, sender) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'flex gap-3 ' + (sender === 'user' ? 'flex-row-reverse' : '');
+  div.innerHTML = `
+    <div class="w-8 h-8 rounded-full ${sender === 'user' ? 'bg-secondary' : 'bg-gradient-to-br from-primary to-secondary'} flex items-center justify-center text-white text-xs shrink-0">
+      <i class="fas ${sender === 'user' ? 'fa-user' : 'fa-robot'}"></i>
+    </div>
+    <div class="${sender === 'user' ? 'bg-secondary text-white' : 'bg-slate-100 dark:bg-slate-700'} p-3 rounded-2xl ${sender === 'user' ? 'rounded-tl-none' : 'rounded-tr-none'} text-sm max-w-[80%]">
+      ${text}
+    </div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function getChatResponse(message) {
+  const lowerMsg = message.toLowerCase();
+  for (const [key, response] of Object.entries(chatResponses)) {
+    if (lowerMsg.includes(key)) return response;
+  }
+  return 'شكراً لتواصلك معنا. يمكنك الاتصال على 19199 للمزيد من المعلومات أو حجز موعد عبر الموقع.';
+}
+
+// ============ DARK MODE ============
+function toggleDarkMode() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+}
+if (localStorage.getItem('darkMode') === 'true') {
+  document.documentElement.classList.add('dark');
+}
+
+// ============ SEARCH ============
+function toggleSearch() {
+  document.getElementById('searchOverlay').classList.toggle('active');
+  if (document.getElementById('searchOverlay').classList.contains('active')) {
+    document.getElementById('searchInput').focus();
+  }
+}
+
+function performSearch(query) {
+  const results = document.getElementById('searchResults');
+  if (!query) { results.innerHTML = ''; return; }
+  const allItems = [
+    ...departments.map(d => ({ type: 'قسم', title: d.name, link: '#departments' })),
+    ...doctors.map(doc => ({ type: 'طبيب', title: doc.name, link: '#doctors' })),
+    { type: 'خدمة', title: 'الفحوصات الشاملة', link: '#services' },
+    { type: 'خدمة', title: 'العمليات الجراحية', link: '#services' },
+    { type: 'خدمة', title: 'المختبر المتقدم', link: '#services' },
+    { type: 'خدمة', title: 'الأشعة التشخيصية', link: '#services' },
+    { type: 'خدمة', title: 'الرعاية المنزلية', link: '#services' },
+    { type: 'خدمة', title: 'التطعيمات', link: '#services' },
+    { type: 'خدمة', title: 'الاستشارات الطبية', link: '#services' },
+    { type: 'صفحة', title: 'عن المستشفى', link: '#about' },
+    { type: 'صفحة', title: 'الحجز', link: '#booking' },
+    { type: 'صفحة', title: 'الأخبار', link: '#news' },
+    { type: 'صفحة', title: 'التواصل', link: '#contact' },
+  ];
+  const filtered = allItems.filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
+  results.innerHTML = filtered.length > 0 ? filtered.map(item => `
+    <a href="${item.link}" onclick="toggleSearch()" class="flex items-center gap-4 p-4 hover:bg-white/10 transition rounded-xl">
+      <span class="badge badge-primary text-xs">${item.type}</span>
+      <span class="font-semibold">${item.title}</span>
+    </a>
+  `).join('') : '<div class="p-4 text-center text-white/70">لا توجد نتائج</div>';
+}
+
+// ============ LANGUAGE ============
+function setLanguage(lang) {
+  document.getElementById('lang-ar').classList.toggle('active', lang === 'ar');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  showToast(lang === 'ar' ? 'اللغة العربية مفعلة' : 'English language activated');
+}
+
+// ============ MOBILE MENU ============
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+  document.getElementById('mobileOverlay').classList.toggle('active');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('active') ? 'hidden' : '';
+}
+
+// ============ EMERGENCY MODAL ============
+function openEmergencyModal() {
+  document.getElementById('emergencyModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// ============ FAQ ============
+function toggleFaq(button) {
+  const item = button.parentElement;
+  const wasActive = item.classList.contains('active');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+  if (!wasActive) item.classList.add('active');
+}
+
+// ============ TABS ============
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+// ============ JOB MODAL ============
+function openJobModal(title) {
+  document.getElementById('jobTitle').textContent = title;
+  document.getElementById('jobModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function submitJob(e) {
+  e.preventDefault();
+  closeModal('jobModal');
+  showToast('تم إرسال طلبك بنجاح! سنتواصل معك قريباً.');
+}
+
+// ============ CONTACT FORM ============
+function submitContact(e) {
+  e.preventDefault();
+  showToast('تم إرسال رسالتك بنجاح! سنتواصل معك في أقرب وقت.');
+  e.target.reset();
+}
+
+// ============ NEWSLETTER ============
+function subscribeNewsletter(e) {
+  e.preventDefault();
+  showToast('تم الاشتراك في النشرة البريدية بنجاح!');
+  e.target.reset();
+}
+
+// ============ TOAST ============
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ============ SCROLL ANIMATIONS ============
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+}
+
+// ============ COUNTERS ============
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = parseInt(counter.dataset.target);
+        animateCounter(counter, target);
+        observer.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(counter => observer.observe(counter));
+}
+
+function animateCounter(element, target) {
+  let current = 0;
+  const increment = target / 100;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      element.textContent = target.toLocaleString();
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(current).toLocaleString();
+    }
+  }, 20);
+}
+
+// ============ PARTICLES ============
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 8 + 's';
+    particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+    container.appendChild(particle);
+  }
+}
+
+// ============ CLOSE MODALS ON ESCAPE ============
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.active').forEach(modal => { modal.classList.remove('active'); });
+    document.body.style.overflow = '';
+    if (document.getElementById('searchOverlay').classList.contains('active')) { toggleSearch(); }
+  }
+});
+
+// ============ CLOSE MODAL ON BACKDROP CLICK ============
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+});
+</script>
+</body>
+</html>
